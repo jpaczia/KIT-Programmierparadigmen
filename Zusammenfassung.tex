@@ -1,0 +1,87 @@
+\documentclass[openany]{book}
+
+\usepackage{paralist}
+\usepackage{rotating}
+
+\usepackage{tabularx}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{geometry}
+\geometry{
+	left = 2cm,
+	right = 2cm,
+	top = 2cm,
+	bottom = 2cm
+}
+
+\usepackage{amssymb} 
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage[autostyle]{csquotes}
+\usepackage{graphicx}
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+
+\usepackage[colorlinks]{hyperref}
+\hypersetup{
+	colorlinks = false,
+	linkbordercolor= red
+}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{listings}
+
+
+\setlength{\marginparwidth}{2cm}
+\usepackage[colorinlistoftodos,prependcaption,textsize=small]{todonotes}
+\newcommand{\unsure}[2][]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommand{\change}[2][]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+\newcommand{\info}[2][]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommand{\improvement}[2][]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+\newcommand{\notdone}[1]{\todo[linecolor=Fuchsia,backgroundcolor=Fuchsia!25,bordercolor=Fuchsia,inline]{Noch nicht geschrieben: #1}}
+\newcommand{\skipped}{\todo[linecolor=Fuchsia,backgroundcolor=Fuchsia!25,bordercolor=Fuchsia,inline]{Ausgelassen.}}
+\newcommand{\thiswillnotshow}[2][]{\todo[disable,#1]{#2}}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\renewcommand\thepart{\arabic{part}}
+\newcommand{\myparagraph}[1]{\paragraph{#1}\mbox{}\\}
+\newcommand{\funcSignature}[1]{\paragraph{$#1$}\mbox{}\\}
+\newcommand{\example}{\newline Bsp.:}
+\newcommand{\explain}{\newline Erklärung: \newline}
+\newcommand{\constraint}{\newline \newline Constraint: \newline \newline}
+\newcommand{\equal}{\newline Äquivalent: \newline}
+\newcommand{\analog}[1]{\newline \underline{Analog:} $#1$ \newline}
+\newcommand{\slide}[2]{(Folie: $#1\_\text{(#2)}$)}
+\newcommand{\engquote}[1]{\foreignblockquote{english}{#1}}
+\newcommand{\multlineTable}[1]{\begin{tabular}[c]{@{}l@{}}\\#1\\ \end{tabular}}
+
+
+
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\begin{document}
+
+%\begin{algorithm}
+%	\caption{template $a+b=c$}
+%	\begin{algorithmic}
+%		\State $S \leftarrow 0$
+%	\end{algorithmic}
+%\end{algorithm}
+
+\hyphenation{
+	 Pro-to-koll-in-stan-zen
+}
+
+%\listoftodos
+\tableofcontents
+
+\include{sections/001_Haskell}
+\include{sections/002_theoBasics}
+\include{sections/004_parallelProgramming}
+
+\end{document}

@@ -1,0 +1,35 @@
+\chapter{Parallelprogrammierung}
+\section{Grundlagen}
+\subsection{Coffman-Bedingungen (Deadlock-Bedingungen) \slide{54}{47}}
+Wenn alle vier der folgenden Bedingungen zutreffen, liegt ein Deadlock vor.
+Deadlocks können verhindert werden, indem immer mindestens eine Bedingung nicht erfüllt ist, d.h. nicht alle auf einmal erfüllt sein können.
+\begin{compactenum}
+	\item \textbf{Mutual exclusion}
+		\begin{compactitem}
+			\item beschränkter Zugriff auf eine Ressource
+			\item Ressource kann nur mit einer beschränkten Anzahl von Nutzern geteilt werden
+		\end{compactitem}
+	\item \textbf{Hold and wait}: Warten auf alle benötigten Ressourcen, während die Kontrolle über bisher zugesprochene (mind. eine) Ressourcen behalten wird.
+	\item \textbf{No preemption}: Zugewiesene Ressourcen können nur freiwillig zurückgegeben werden, die Rückgabe kann nicht erzwungen werden.
+	\item \textbf{Circular Wait: }Möglichkeit von Kreisen in Ressourcen-Anfragen Graph:\\
+				Zyklische Kette von Prozessen, die bereits Ressourcen (mind. eine) erhalten haben und gleichzeiig auf weitere Ressourcen warten, welche jeweils dem nächsten Prozess in der zirkulären Kette zugesprochen wurden.
+\end{compactenum}
+
+\subsection{Flynn's Taxonomy \slide{51}{13}; Grafiken von SS 14, Nr. 6}
+\todo[inline]{Grafiken korrekt? Vgl. SIMD und MISD}
+\noindent\makebox[\textwidth]{\includegraphics[width=200mm]{imgs/FlynnsTaxonomy.png}}
+
+\subsection{Beschleunigung: Amdahl's Law \slide{51}{17}}
+\myparagraph{Beschleunigung eines Algo durch die Verwendung von n Prozessoren:}
+$$S(n) = \frac{T1}{T(n)}=\frac{\text{Ausführungszeit mit einem Prozessor}}{\text{Ausführungszeit mit n Prozessoren}}$$
+\myparagraph{maximale Beschleunigung durch parallele Ausführung mit n Prozessoren:}
+$$S(n)= \frac{1}{(1-p)+ \frac{p}{n}}$$
+p: parallelisierbarer prozentualer Anteil des Programms
+
+\section{MPI}
+\begin{itemize}
+	\item \textit{MPI\_Comm\_rank}: Rank $R_i$ des ausführenden Prozesses i
+	\item \textit{MPI\_Comm\_size}: Gesamtanzahl von Prozessen
+	\item \textit{MPI\_Comm\_WORLD}: Standard Communicator	
+\end{itemize}
+Minimalbsp.: \slide{53}{7}
