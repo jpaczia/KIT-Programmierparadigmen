@@ -22,7 +22,7 @@ Zwei Funktionen sind gleich, falls Ergebnis gleich für alle Argumente
 			\item Addition $plus = \lambda m.\; \lambda n.\; \lambda s.\; \lambda z.\; m\; s\; (n\; s\; z)$
 			\item Multiplikation $times = \lambda m.\; \lambda n.\; \lambda s.\; n\; (m\; s) \overset{\eta}{=} \lambda m.\; \lambda n.\; \lambda s.\; \lambda z.\; n\; (m\; s)\; z$
 			\item Potenzieren $exp = \lambda m.\; \lambda n.\; n\; m \overset{\eta}{=} \lambda m.\; \lambda n.\; \lambda s. \; \lambda z.\; n\; m\; s\; z$
-			\item Subtraktion $sub = \lambda m.\; \lambda n.\; n\; pred\; m$ (ÜB 5, Nr. 4)
+			\item Subtraktion $sub = \lambda m.\; \lambda n.\; n\; pred\; m$\exRef{ÜB 5, Nr. 4}
 				\begin{compactitem}
 					\item $pair = \lambda a.\; \lambda b.\; \lambda f.\; f\; a\; b$
 					\item $fst = \lambda p.\; p (\lambda a.\; \lambda b.\; a)$
@@ -30,10 +30,10 @@ Zwei Funktionen sind gleich, falls Ergebnis gleich für alle Argumente
 					\item $next = \lambda p.\; pair\; (snd\; p)\; (succ\; (snd\; p))$
 					\item $pred = \lambda n.\; fst\; (n\; next\; (pair\; c_0\; c_0))$
 				\end{compactitem}
-			\item Vegleichsoperation \enquote{lessEq $m \leq n$} $lessEq = \lambda m.\; \lambda n.\; isZero\; (sub\; m\; n)$ (ÜB 6, Nr. 2)
+			\item Vegleichsoperation \enquote{lessEq $m \leq n$} $lessEq = \lambda m.\; \lambda n.\; isZero\; (sub\; m\; n)$\exRef{ÜB 6, Nr. 2}
 			\item Vegleichsoperation \enquote{greaterEq $m \geq n$} $greaterEq = \lambda m.\; \lambda n.\; isZero\; (sub\; n\; m)$
 			\item Vergleichsoperation \enquote{eq $m == n$} $eq = \lambda m.\; \lambda n.\; (\lambda a.\; a)\; (lessEq\; m\; n)\; (greaterEq\; m\; n)\; c_{false}$
-			\item $isZero = \lambda n.\; n\; (\lambda p.\; c_{false})\; c_{true}$ (SS 14)
+			\item $isZero = \lambda n.\; n\; (\lambda p.\; c_{false})\; c_{true}$\exRef{SS 14}
 		\end{compactitem}
 	\item boolsche Werte
 		\begin{compactitem}
