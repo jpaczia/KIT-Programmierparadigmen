@@ -1,0 +1,16 @@
+\section{Zipping and unzipping lists}
+\funcSignature{zip :: [a] \rightarrow [b] \rightarrow [(a, b)] }
+zip takes two lists and returns a list of corresponding pairs. If one input list is short, excess elements of the longer list are discarded.\\
+zip is right-lazy:
+\codeEx{zip [] \_\textbar \_ = []}
+\analog{zip3, zip4, zip5, zip6, zip7 (mit 3, 4, 5, 6, 7 Eingabelisten)}
+
+\funcSignature{zipWith :: (a \rightarrow b \rightarrow c) \rightarrow [a] \rightarrow [b] \rightarrow [c] }
+zipWith generalises zip by zipping with the function given as the first argument, instead of a tupling function. For example, zipWith (+) is applied to two lists to produce the list of corresponding sums.\\
+zipWith is right-lazy:
+\codeEx{zipWith f [] \_\textbar\_ = []}
+\analog{zipWith3, zipWith4, zipWith5, zipWith6, zipWith7  (mit 3, 4, 5, 6, 7 Eingabelisten)}
+
+\funcSignature{unzip :: [(a, b)] \rightarrow ([a], [b]) }
+unzip transforms a list of pairs into a list of first components and a list of second components.
+\analog{unzip3, unzip4, unzip5, unzip6, unzip7 (mit 3, 4, 5, 6, 7 Eingabelisten)}

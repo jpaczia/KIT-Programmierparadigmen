@@ -1,0 +1,65 @@
+\section{Reducing lists (folds)}
+\funcSignature{foldl :: Foldable\; t \Rightarrow (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow t\; a \rightarrow b}
+Left-associative fold of a structure.\\
+In the case of lists, foldl, when applied to a binary operator, a starting value (typically the left-identity of the operator), and a list, reduces the list using the binary operator, from left to right:
+\codeEx{foldl f z [x1, x2, ..., xn] == (...((z `f` x1) `f` x2) `f`...) `f` xn}
+Note that to produce the outermost application of the operator the entire input list must be traversed. This means that foldl' will diverge if given an infinite list.\\
+Also note that if you want an efficient left-fold, you probably want to use foldl' instead of foldl. The reason for this is that latter does not force the "inner" results (e.g. z f x1 in the above example) before applying them to the operator (e.g. to (f x2)). This results in a thunk chain O(n) elements long, which then must be evaluated from the outside-in.\\
+For a general Foldable structure this should be semantically identical to,
+\codeEx{foldl f z = foldl f z . toList}
+
+\funcSignature{foldl' :: Foldable\; t \Rightarrow (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow t\; a \rightarrow b }
+Left-associative fold of a structure but with strict application of the operator.\\
+This ensures that each step of the fold is forced to weak head normal form before being applied, avoiding the collection of thunks that would otherwise occur. This is often what you want to strictly reduce a finite list to a single, monolithic result (e.g. length).\\
+For a general Foldable structure this should be semantically identical to,
+\codeEx{foldl f z = foldl' f z . toList}
+
+\funcSignature{foldl1 :: Foldable\; t \Rightarrow (a \rightarrow a \rightarrow a) \rightarrow t\; a \rightarrow a }
+A variant of foldl that has no base case, and thus may only be applied to non-empty structures.
+\codeEx{foldl1 f = foldl1 f . toList}
+
+\funcSignature{foldl1' :: (a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow a }
+A strict version of foldl1
+
+\funcSignature{foldr :: Foldable\; t \Rightarrow (a \rightarrow b \rightarrow b) \rightarrow b \rightarrow t\; a \rightarrow b }
+Right-associative fold of a structure.\\
+In the case of lists, foldr, when applied to a binary operator, a starting value (typically the right-identity of the operator), and a list, reduces the list using the binary operator, from right to left:
+\codeEx{foldr f z [x1, x2, ..., xn] == x1 `f` (x2 `f` ... (xn `f` z)...)}
+Note that, since the head of the resulting expression is produced by an application of the operator to the first element of the list, foldr can produce a terminating expression from an infinite list.
+For a general Foldable structure this should be semantically identical to,
+\codeEx{foldr f z = foldr f z . toList}
+
+\funcSignature{foldr1 :: Foldable\; t \Rightarrow (a \rightarrow a \rightarrow a) \rightarrow t\; a \rightarrow a }
+A variant of foldr that has no base case, and thus may only be applied to non-empty structures.
+\codeEx{foldr1 f = foldr1 f . toList}
+
+\subsection{Special folds}
+\funcSignature{concat :: Foldable\; t \Rightarrow t [a] \rightarrow [a]}
+The concatenation of all the elements of a container of lists.
+
+\funcSignature{concatMap :: Foldable\; t \Rightarrow (a \rightarrow [b]) \rightarrow t\; a \rightarrow [b] }
+Map a function over all the elements of a container and concatenate the resulting lists.
+
+\funcSignature{and :: Foldable\; t \Rightarrow t Bool \rightarrow Bool}
+and returns the conjunction of a container of Bools. For the result to be True, the container must be finite; False, however, results from a False value finitely far from the left end.
+
+\funcSignature{or :: Foldable\; t \Rightarrow t Bool \rightarrow Bool}
+or returns the disjunction of a container of Bools. For the result to be False, the container must be finite; True, however, results from a True value finitely far from the left end.
+
+\funcSignature{any :: Foldable\; t \Rightarrow (a \rightarrow Bool) \rightarrow t\; a \rightarrow Bool}
+Determines whether any element of the structure satisfies the predicate.
+
+\funcSignature{all :: Foldable\; t \Rightarrow (a \rightarrow Bool) \rightarrow t\; a \rightarrow Bool}
+Determines whether all elements of the structure satisfy the predicate.
+
+\funcSignature{sum :: (Foldable\; t, Num\; a) \Rightarrow t\; a \rightarrow a }
+The sum function computes the sum of the numbers of a structure.
+
+\funcSignature{product :: (Foldable\; t, Num\; a) \Rightarrow t\; a \rightarrow a }
+The product function computes the product of the numbers of a structure.
+
+\funcSignature{maximum :: forall\; a.\; (Foldable\; t,\; Ord\; a) \Rightarrow t\; a \rightarrow a }
+The largest element of a non-empty structure.
+
+\funcSignature{minimum :: forall\; a.\; (Foldable\; t, Ord\; a) \Rightarrow t\; a \rightarrow a }
+The least element of a non-empty structure.

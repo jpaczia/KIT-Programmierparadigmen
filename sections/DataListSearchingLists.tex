@@ -1,0 +1,23 @@
+\section{Searching lists}
+\subsection{Searching by equality}
+
+\funcSignature{elem :: (Foldable\; t, Eq\; a) \Rightarrow a \rightarrow t\; a \rightarrow Bool}
+Does the element occur in the structure?
+
+\funcSignature{notElem :: (Foldable\; t, Eq\; a) \Rightarrow a \rightarrow t\; a \rightarrow Bool}
+notElem is the negation of elem.
+
+\funcSignature{lookup :: Eq\; a \Rightarrow a \rightarrow [(a, b)] \rightarrow Maybe\; b }
+lookup key assocs looks up a key in an association list.
+
+\subsection{Searching with a predicate}
+\funcSignature{find :: Foldable\; t \Rightarrow (a \rightarrow Bool) \rightarrow t\; a \rightarrow Maybe\; a }
+The find function takes a predicate and a structure and returns the leftmost element of the structure matching the predicate, or Nothing if there is no such element.
+
+\funcSignature{filter :: (a \rightarrow Bool) \rightarrow [a] \rightarrow [a]}
+filter, applied to a predicate and a list, returns the list of those elements that satisfy the predicate; i.e.,
+\codeEx{filter p xs = [ x \textbar x \textless - xs, p x]}
+
+\funcSignature{partition :: (a \rightarrow Bool) \rightarrow [a] \rightarrow ([a], [a])}
+The partition function takes a predicate a list and returns the pair of lists of elements which do and do not satisfy the predicate, respectively; i.e.,
+\codeEx{partition p xs == (filter p xs, filter (not . p) xs)}

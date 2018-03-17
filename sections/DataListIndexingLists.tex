@@ -1,0 +1,17 @@
+\section{Indexing Lists}
+These functions treat a list xs as a indexed collection, with indices ranging from 0 to length xs - 1.
+
+\funcSignature{(!!) :: [a] \rightarrow Int \rightarrow a}
+List index (subscript) operator, starting from 0. It is an instance of the more general genericIndex, which takes an index of any integral type.
+
+\funcSignature{elemIndex :: Eq\; a \Rightarrow a \rightarrow [a] \rightarrow Maybe Int}
+The elemIndex function returns the index of the first element in the given list which is equal (by ==) to the query element, or Nothing if there is no such element.
+
+\funcSignature{elemIndices :: Eq\; a \Rightarrow a \rightarrow [a] \rightarrow [Int] }
+The elemIndices function extends elemIndex, by returning the indices of all elements equal to the query element, in ascending order.
+
+\funcSignature{findIndex :: (a \rightarrow Bool) \rightarrow [a] \rightarrow Maybe Int}
+The findIndex function takes a predicate and a list and returns the index of the first element in the list satisfying the predicate, or Nothing if there is no such element.
+
+\funcSignature{findIndices :: (a \rightarrow Bool) \rightarrow [a] \rightarrow [Int] }
+The findIndices function extends findIndex, by returning the indices of all elements satisfying the predicate, in ascending order.
