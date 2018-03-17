@@ -33,6 +33,7 @@ For a general Foldable structure this should be semantically identical to,
 A variant of foldr that has no base case, and thus may only be applied to non-empty structures.
 \codeEx{foldr1 f = foldr1 f . toList}
 
+\newpage
 \subsection{Special folds}
 \funcSignature{concat :: Foldable\; t \Rightarrow t [a] \rightarrow [a]}
 The concatenation of all the elements of a container of lists.
@@ -40,10 +41,10 @@ The concatenation of all the elements of a container of lists.
 \funcSignature{concatMap :: Foldable\; t \Rightarrow (a \rightarrow [b]) \rightarrow t\; a \rightarrow [b] }
 Map a function over all the elements of a container and concatenate the resulting lists.
 
-\funcSignature{and :: Foldable\; t \Rightarrow t Bool \rightarrow Bool}
+\funcSignature{and :: Foldable\; t \Rightarrow t\; Bool \rightarrow Bool}
 and returns the conjunction of a container of Bools. For the result to be True, the container must be finite; False, however, results from a False value finitely far from the left end.
 
-\funcSignature{or :: Foldable\; t \Rightarrow t Bool \rightarrow Bool}
+\funcSignature{or :: Foldable\; t \Rightarrow t\; Bool \rightarrow Bool}
 or returns the disjunction of a container of Bools. For the result to be False, the container must be finite; True, however, results from a True value finitely far from the left end.
 
 \funcSignature{any :: Foldable\; t \Rightarrow (a \rightarrow Bool) \rightarrow t\; a \rightarrow Bool}

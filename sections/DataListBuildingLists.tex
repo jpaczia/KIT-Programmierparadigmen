@@ -21,10 +21,10 @@ scanr is the right-to-left dual of scanl. Note that
 scanr1 is a variant of scanr that has no starting value argument.
 
 \subsection{Accumulating maps}
-\funcSignature{mapAccumL :: Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t c) }
+\funcSignature{mapAccumL :: Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t\; c) }
 The mapAccumL function behaves like a combination of fmap and foldl; it applies a function to each element of a structure, passing an accumulating parameter from left to right, and returning a final value of this accumulator together with the new structure.
 
-\funcSignature{mapAccumR :: Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t c) }
+\funcSignature{mapAccumR :: Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t\; c) }
 The mapAccumR function behaves like a combination of fmap and foldr; it applies a function to each element of a structure, passing an accumulating parameter from right to left, and returning a final value of this accumulator together with the new structure.
 
 \subsection{Infinite lists}
@@ -44,13 +44,13 @@ cycle ties a finite list into a circular one, or equivalently, the infinite repe
 \subsection{Unfolding}
 \funcSignature{unfoldr :: (b \rightarrow Maybe\; (a, b)) \rightarrow b \rightarrow [a] }
 The unfoldr function is a `dual' to foldr: while foldr reduces a list to a summary value, unfoldr builds a list from a seed value. The function takes the element and returns Nothing if it is done producing the list or returns Just (a,b), in which case, a is a prepended to the list and b is used as the next element in a recursive call. For example,
-\codeEx{iterate f == unfoldr (\textbackslash x -> Just (x, f x))}
+\codeEx{iterate f == unfoldr (\textbackslash x -\textgreater Just (x, f x))}
 In some cases, unfoldr can undo a foldr operation:
 \codeEx{unfoldr f' (foldr f z xs) == xs}
 if the following holds:
 \begin{align*}
-	&f' (f x y) = Just (x,y)\\
-	&f' z       = Nothing
+	&f'\; (f\; x y) = Just\; (x,y)\\
+	&f'\; z       = Nothing
 \end{align*}
 A simple use of unfoldr:
 \begin{align*}
