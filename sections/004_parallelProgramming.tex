@@ -21,7 +21,7 @@ Deadlocks können verhindert werden, indem immer mindestens eine Bedingung nicht
 
 \subsection{Beschleunigung: Amdahl's Law \slide{51}{17}}
 \myparagraph{Beschleunigung eines Algo durch die Verwendung von n Prozessoren:}
-$$S(n) = \frac{T1}{T(n)}=\frac{\text{Ausführungszeit mit einem Prozessor}}{\text{Ausführungszeit mit n Prozessoren}}$$
+$$S(n) = \frac{T(1)}{T(n)}=\frac{\text{Ausführungszeit mit einem Prozessor}}{\text{Ausführungszeit mit n Prozessoren}}$$
 \myparagraph{maximale Beschleunigung durch parallele Ausführung mit n Prozessoren:}
 $$S(n)= \frac{1}{(1-p)+ \frac{p}{n}}$$
 p: parallelisierbarer prozentualer Anteil des Programms
@@ -37,3 +37,5 @@ p: parallelisierbarer prozentualer Anteil des Programms
 	\item \texttt{MPI\_Send(void* buffer, int count, MPI\_Datatype datatype, int dest, int tag, MPI\_Comm comm)}
 	\item \texttt{MPI\_Recv(void* buffer, int count, MPI\_Datatype datatype, int source, int tag, MPI\_Comm comm, MPI\_Status* status)}
 \end{compactitem}
+
+\section{Java}
