@@ -1,0 +1,16 @@
+\chapter{Fragen}
+\section{Compiler}
+\subsection{First und Follow Mengen}
+\begin{itemize}
+	\item $Follow_k(x)$ auch wie folgt definierbar?:
+		\begin{align*}
+			Follow_k(x) &= \{ \cup\; First_k(y) | \exists m,y \in (V \cup \Sigma)^* : S \Rightarrow^* mxy \}\\
+						&= \{ u \in \Sigma^k | \exists m,y \in (V \cup \Sigma)^*: \bigg(S \Rightarrow^* mxy\bigg) \wedge \bigg( u \in First_k(y) \bigg) \} \text{ (große Klammern hinzugefügt)}\\
+						&= \{ u \in \Sigma^k | \exists m,y \in (V \cup \Sigma)^*: S \Rightarrow^* mxy \wedge u \in First_k(y) \} \text{ \slide{71}{379}}
+		\end{align*}
+	\item wie ist $Follow_k(x)$ definiert, wenn 
+		$$S \nRightarrow mxy$$
+		d.h. wenn \enquote{x} nie von S aus abgebildet wird? (bspw. $Follow_k(S)$, d.h. S ist nur Startzustand, wird aber durch keine Produktion / Abbildung erreicht?)\\
+		\textbf{Annahme:} $Follow_k(x) = \{ \# \}$
+	\item gilt $\# \in Follow_k(S)$ immer?
+\end{itemize}
