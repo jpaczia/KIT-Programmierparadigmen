@@ -1,0 +1,18 @@
+\chapter{Design by Contract}
+\section{JML}
+\subsection{Basic Syntax}
+\begin{table}[]
+	\centering
+	\label{my-label}
+	\begin{tabular}{l|l}
+		Syntax    & Bedeutung      															\\ \hline
+		$a ==> b$ & a impliziert b 															\\ \hline
+		$a <==>$  & a und b äquivalent            											\\ \hline
+		$a <=!=>$  & a und b \textbf{nicht} äquivalent ($a \nleftrightarrow b$)            	\\ \hline
+		\textbackslash result  & Ergebnis der Methode            							\\ \hline
+		\textbackslash old(E)  & Wert von E, bevor die Methode ausgeführt wurde        		\\ \hline		
+	\end{tabular}
+\end{table}
+
+\todo{(\textbackslash forall)}
+\todo{(\textbackslash exists)}
