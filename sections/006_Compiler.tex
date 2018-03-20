@@ -1,12 +1,79 @@
 \chapter{Compiler}
 \section{Java-Bytecode}
-\begin{table}[]
+\subsection{Präfixe / Suffixe}
+\begin{table}[h]
 	\centering
 	\label{my-label}
-	\begin{tabular}{llll}
-		Befehl & Parameter & Beschreibung & Beispiel \\
-		&           &              &          \\
-		&           &              &          \\
-		&           &              &         
+	\begin{tabular}{l|l}
+		Präfix / Suffix	& Operand Typ\\ \hline
+		i	&	integer		\\ \hline
+		l	&	long		\\ \hline
+		s	&	short		\\ \hline
+		b	&	byte		\\ \hline
+		c	&	character	\\ \hline
+		f	&	float		\\ \hline
+		d	&	double		\\ \hline
+		a	&	reference	\\
+	\end{tabular}
+\end{table}
+\subsection{Lesen / Schreiben von lokalen Variablen}
+\begin{table}[h]
+	\centering
+	\label{my-label}
+	\begin{tabular}{l|l|l|l}
+		Befehl & Parameter & Beschreibung & Beispiel \\ \hline
+		iconst\_x	&	\multlineTable{$x\in \{0,1,2,3,4,5,m1\}$\\ } & \multlineTable{lädt die int-Konstante x\\ m1 steht für Konstante \enquote{-1}} & \multlineTable{\texttt{iconst\_1}\\ lädt den int-Wert \enquote{1} auf den Stack} \\ \hline
+		\textbf{TYPE}load\_x	& 	\multlineTable{x: Index der lokalen\\ Variable $x\in \{ 0,1,2,3 \}$\\ (x gehört zum Befehl,\\ es gibt pro x ein Befehl;\\ d.h. x ist keine Variable) }	&	\multlineTable{lädt den Wert der Variable mit Typ\\ \enquote{TYPE} mit Index x auf den Stack} 	& \multlineTable{\texttt{iload\_2}\\ lade Wert von der Variable mit\\ Index 2 und dem Typ \enquote{Integer}}      \\ \hline
+		
+		\textbf{TYPE}store\_x	&	\multlineTable{x: Index der Variable\\ $x\in \{ 0,1,2,3 \}$\\ (x gehört zum Befehl,\\ es gibt pro x ein Befehl;\\ d.h. x ist keine Variable) }	&	\multlineTable{speichert den obersten Wert auf dem\\ Stack mit Typ \enquote{TYPE} in Variable\\ mit Index x}	& \multlineTable{\texttt{istore\_2}\\ speichere den obersten Wert auf\\ dem Stack vom Typ \enquote{Integer}\\ in Variable 2 }	\\ \hline
+		
+		\textbf{TYPE}load x	& \multlineTable{x: Index der lokalen\\ Variable $0 \leq x \leq 255$\\ (x mit 1 Byte darstellbar) }	&	\multlineTable{lädt den Wert der Variable mit Typ\\ \enquote{TYPE} mit Index x auf den Stack} 	& \multlineTable{\texttt{iload 7}\\ lade Wert von der Variable mit\\ Index 7 und dem Typ \enquote{Integer}}      \\ \hline
+		
+		\textbf{TYPE}store x	& \multlineTable{x: Index der lokalen\\ Variable $0 \leq x \leq 255$\\ (x mit 1 Byte darstellbar) }	&	\multlineTable{speichert den obersten Wert auf dem\\ Stack mit Typ \enquote{TYPE} in Variable\\ mit Index x}	& \multlineTable{\texttt{istore 7}\\ speichere den obersten Wert auf\\ dem Stack vom Typ \enquote{Integer}\\ in Variable 7}	\\ \hline		
+	\end{tabular}
+\end{table}
+\myparagraph{Vergleich \enquote{iload\_x} vs. \enquote{iload x}}
+\begin{itemize}
+	\item \enquote{iload\_x} (mit Unterstrich): $x \in \{ 0,1,2,3 \}$ ist ein (einziger) Befehl, ohne Parameter. \enquote{x} ist schon im Opcode enthalten. Der Befehl besteht aus 1 Byte.
+	\item \enquote{iload x} (ohne Unterstrich): $0 \leq x \leq 255$ ist ein Befehl, mit Parameter \enquote{x}. x ist nicht im Opcode enthalten. \enquote{iload x} funktioniert mit allen Zahlen x, die in ein Byte passen.
+\end{itemize}
+Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bevorzugt; vorausgesetzt x ist klein genug.
+
+\subsection{Lesen / Schreiben von Feldern}
+
+\subsection{Sprungbefehle}
+\begin{table}[h]
+	\centering
+	\label{my-label}
+	\begin{tabular}{l|l|l|l}
+		Befehl & Parameter & Beschreibung & Beispiel \\ \hline
+		
+		ifeq & Parameter & Beschreibung & Beispiel \\ \hline
+		
+		ifnull & Parameter & Beschreibung & Beispiel \\ \hline
+		
+		tableswitch & Parameter & Beschreibung & Beispiel \\ \hline
+		
+	\end{tabular}
+\end{table}
+\subsection{Methodenaufrufe}
+\subsection{Objekterzeugung}
+\subsection{Arithmetische Berechnungen}
+\begin{table}[h]
+	\centering
+	\label{my-label}
+	\begin{tabular}{l|l|l|l}
+		Befehl & Parameter & Beschreibung & Beispiel \\ \hline
+		
+		\textbf{TYPE}mul & - & \multlineTable{multipliziert zwei Werte vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{imul}} \\ \hline
+		
+		\textbf{TYPE}div & - & \multlineTable{dividiert zwei Werte vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{idiv}} \\ \hline
+		
+		\textbf{TYPE}add & - & \multlineTable{addiert zwei Werte vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{iadd}} \\ \hline
+		
+		\textbf{TYPE}sub & - & \multlineTable{subtrahiert zwei Werte vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{iadd}} \\ \hline
+		
+		\textbf{TYPE}neg & - & \multlineTable{negiert einen Wert vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{ineg}} \\ \hline
+		
 	\end{tabular}
 \end{table}
