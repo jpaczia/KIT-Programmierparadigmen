@@ -1,5 +1,8 @@
 \chapter{Compiler}
 \section{Java-Bytecode \href{https://docs.oracle.com/javase/specs/jvms/se10/jvms10.pdf}{The Java Virtual Machine Specification}}
+
+Class-Datei disassemblen: \href{https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javap.html}{javap}
+
 \subsection{Präfixe / Suffixe}
 \begin{table}[h]
 	\centering
@@ -74,11 +77,11 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		
 		ifgt LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}   & \multlineTable{Wenn der oberste Wert\\ auf dem Stack \textbf{größer 0} ist,\\ dann springe zu dem geg. Label} & \multlineTable{ifgt then\\  analog zu \enquote{ifle} } \\ \hline		
 		
-		iflt LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}   & \multlineTable{Wenn der oberste Wert\\ auf dem Stack \textbf{kleiner 0} ist,\\ dann springe zu dem geg. Label} & \multlineTable{iflt then\\  analog zu \enquote{ifle} } \\ \hline	
+		iflt LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}   & \multlineTable{Wenn der oberste Wert\\ auf dem Stack \textbf{kleiner 0} ist,\\ dann springe zu dem geg. Label} & \multlineTable{iflt then\\  analog zu \enquote{ifle} } \\ \hline \hline	
 		
 		ifnull LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Wert (/Referenz)\\ auf dem Stack \textbf{\texttt{NULL} ist},\\ dann springe zu dem geg. Label} & \multlineTable{ifnull then\\  analog zu \enquote{ifle}} \\ \hline	
 			
-		ifnonnull LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Wert (/Referenz)\\ auf dem Stack \textbf{nicht \texttt{NULL} ist},\\ dann springe zu dem geg. Label} & \multlineTable{ifnonnull then\\  analog zu \enquote{ifle} }\\ \hline
+		ifnonnull LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Wert (/Referenz)\\ auf dem Stack \textbf{nicht \texttt{NULL} ist},\\ dann springe zu dem geg. Label} & \multlineTable{ifnonnull then\\  analog zu \enquote{ifle} }\\ \hline \hline
 		
 		if\_icmpeq LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn die beiden obersten Integer-\\Werte auf dem Stack \textbf{gleich} sind,\\ springe zu dem geg. Label} & \multlineTable{if\_icmpeq then\\ springe zu then\\ \slide{73}{429} } \\ \hline
 		
@@ -98,7 +101,7 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		& \multlineTable{Wenn der oberste Integer-Wert auf\\ dem Stack \textbf{kleiner oder gleich} als\\ der zweite ist, springe zu dem geg. Label} 
 		&  \multlineTable{if\_icmple then\\ analog zu \enquote{if\_icmpeq}} \\ \hline
 		
-		if\_icmplt LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Integer-Wert auf\\ dem Stack \textbf{kleiner} als der zweite ist,\\ springe zu dem geg. Label} &  \multlineTable{if\_icmplt then\\ analog zu \enquote{if\_icmpeq}} \\ \hline
+		if\_icmplt LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Integer-Wert auf\\ dem Stack \textbf{kleiner} als der zweite ist,\\ springe zu dem geg. Label} &  \multlineTable{if\_icmplt then\\ analog zu \enquote{if\_icmpeq}} \\ \hline \hline
 		
 		goto LABEL	& \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Springe bedingungslos zu dem geg.\\ Label} & \multlineTable{goto done\\ springe zu Label \enquote{done}\\ \slide{73}{411} }\\ \hline		
 	\end{tabular}
@@ -107,7 +110,7 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 \begin{table}[h]
 	\centering
 	\label{my-label}
-	\caption{\href{https://www.javaworld.com/article/2860079/learn-java/invokedynamic-101.html}{Quelle}}
+	\caption{\href{https://www.javaworld.com/article/2860079/learn-java/dynamic-101.html}{Quelle}}
 	\begin{tabular}{l|l|l|l|}
 		Befehl & Parameter & Beschreibung & Beispiel \\ \hline
 		
@@ -118,28 +121,25 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		
 		invokestatic \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
-		& \multlineTable{Rufe die \textbf{statische} Methode mit dem geg.\\ Index auf. Die Parameter der Methode\\ werden automatisch in den Operandenstack\\ geladen, \textbf{beginnend bei Variablen-Index 0}\\ (statische Methode, somit keine \enquote{this}-Variable)} 
+		& \multlineTable{Rufe die \textbf{statische} Methode mit dem\\ geg. Index auf. Die Parameter der\\ Methode werden automatisch in den\\ Operandenstack geladen, \textbf{beginnend}\\ \textbf{bei Variablen-Index 0}\\ (statische Methode, somit keine \enquote{this}-Variable)} 
 		& \multlineTable{invokestatic \#2\\ analog zu \enquote{invokevirtual}}\\  \hline
 		
 		invokespecial \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
-		& \multlineTable{Rufe die \textbf{private, Superklassen- oder Konstruktor-} Methode mit dem geg. Index auf. Die Parameter der\\ Methode werden automatisch in den\\ Operandenstack geladen, \textbf{beginnend}\\ \textbf{bei Variablen-Index 1}\\ (Variablen-Index 0: this-Variable / Referenz)} 
+		& \multlineTable{Rufe die \textbf{private, Superklassen-}\\ \textbf{oder Konstruktor-} Methode\\ mit dem geg. Index auf. Die Parameter der\\ Methode werden automatisch in den\\ Operandenstack geladen, \textbf{beginnend}\\ \textbf{bei Variablen-Index 1}\\ (Variablen-Index 0: this-Variable / Referenz)} 
 		& \multlineTable{invokespecial \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline
-		
-		invokedynamic \#INDEX 
-		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
-		& Beschreibung 
-		& \multlineTable{invokedynamic \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline
 		
 		invokeinterface \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
-		& Beschreibung 
+		& \multlineTable{Rufe eine \textbf{Interface} Methode auf,\\ wobei Implementierung des\\ aufrufenden Objektes verwendet wird} 
 		& \multlineTable{invokeinterface \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline
 		
-		
+		invokedynamic \#INDEX 
+		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
+		& \open 
+		& \multlineTable{invokedynamic \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline		
 	\end{tabular}
 \end{table}
-
 
 \subsection{Objekterzeugung}
 \begin{table}[h]
@@ -148,7 +148,7 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 	\begin{tabular}{l|l|l|l}
 		Befehl & Parameter & Beschreibung & Beispiel \\ \hline
 		
-		newarray & \open & Beschreibung & Beispiel \\ \hline	
+		newarray TYPE& \multlineTable{TYPE: Typ der\\ Array-Werte} & \multlineTable{Erstelle ein Array mit Werten des geg. Typ\\ und der Größe des obersten Stack-Wertes.} & \multlineTable{newarray int\\ Erstelle ein int-Array} \\ \hline	
 		
 	\end{tabular}
 \end{table}
@@ -168,10 +168,8 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		
 		\textbf{TYPE}sub & - & \multlineTable{subtrahiert zwei Werte vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{iadd}} \\ \hline
 		
-		\textbf{TYPE}neg & - & \multlineTable{negiert einen Wert vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{ineg}} \\ \hline
+		\textbf{TYPE}neg & - & \multlineTable{negiert einen Wert vom Typ\\ \enquote{TYPE} und lädt das Ergebnis als\\ obersten Wert auf den Stack} & \multlineTable{\texttt{ineg}} \\ \hline		
 		
-		
-		iinc index, const & \multlineTable{index:\\ Index der zu\\ inkrementierenden Variable\\ const:\\ Wert um den die Variable\\ inkrementiert werden soll}  & \multlineTable{Inkrementiere die Variable mit dem\\ geg. Index um den geg. konstanten\\ Wert} & \multlineTable{iinc 1, 1\\ inkrementiere die Variable\\ mit Index 1 um 1\\ iinc 1, -1\\ inkrementiere die Variable\\ mit Index 1 um (-1) } \\ \hline
-		
+		iinc index, const & \multlineTable{index:\\ Index der zu\\ inkrementierenden Variable\\ const:\\ Wert um den die Variable\\ inkrementiert werden soll}  & \multlineTable{Inkrementiere die Variable mit dem\\ geg. Index um den geg. konstanten\\ Wert} & \multlineTable{iinc 1, 1\\ inkrementiere die Variable\\ mit Index 1 um 1\\ iinc 1, -1\\ inkrementiere die Variable\\ mit Index 1 um (-1) } \\ \hline		
 	\end{tabular}
 \end{table}
