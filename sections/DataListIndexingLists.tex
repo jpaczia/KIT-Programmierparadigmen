@@ -2,7 +2,7 @@
 These functions treat a list xs as a indexed collection, with indices ranging from 0 to length xs - 1.
 
 \funcSignature{(!!) :: [a] \rightarrow Int \rightarrow a}
-List index (subscript) operator, starting from 0. It is an instance of the more general genericIndex, which takes an index of any integral type.
+List index (subscript) operator, starting from 0 (first element has index 0). It is an instance of the more general genericIndex, which takes an index of any integral type.
 
 \funcSignature{elemIndex :: Eq\; a \Rightarrow a \rightarrow [a] \rightarrow Maybe Int}
 The elemIndex function returns the index of the first element in the given list which is equal (by ==) to the query element, or Nothing if there is no such element.
