@@ -77,9 +77,14 @@ break, applied to a predicate p and a list xs, returns a tuple where first eleme
 \begin{align*}
 	&\text{break (\textgreater 3) [1,2,3,4,1,2,3,4] == ([1,2,3],[4,1,2,3,4])}\\
 	&\text{break (\textless 9) [1,2,3] == ([],[1,2,3])}\\
-	&\text{break (\textgreater 9) [1,2,3] == ([1,2,3],[])}
+	&\text{break (\textgreater 9) [1,2,3] == ([1,2,3],[])}\\
+	&\text{break even [1,2,3] = ([1], [2,3])}
 \end{align*}
 break p is equivalent to span (not . p).
+
+\eqCode
+\label{haskellBreak}
+\lstinputlisting[language=HASKELL]{codeExamples/DemoBreak.hs}
 
 \funcSignature{stripPrefix :: Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Maybe\; [a] }
 The stripPrefix function drops the given prefix from a list. It returns Nothing if the list did not start with the prefix given, or Just the list after the prefix, if it does.
@@ -94,6 +99,10 @@ The stripPrefix function drops the given prefix from a list. It returns Nothing 
 The group function takes a list and returns a list of lists such that the concatenation of the result is equal to the argument. Moreover, each sublist in the result contains only equal elements. For example,
 \codeEx{group \enquote{Mississippi} = [\enquote{M},\enquote{i},\enquote{ss},\enquote{i},\enquote{ss},\enquote{i},\enquote{pp},\enquote{i}]}
 It is a special case of groupBy, which allows the programmer to supply their own equality test.
+
+\eqCode
+\label{haskellBreak}
+\lstinputlisting[language=HASKELL]{codeExamples/DemoGroup.hs}
 
 \funcSignature{inits :: [a]\rightarrow [[a]] }
 The inits function returns all initial segments of the argument, shortest first. For example,
