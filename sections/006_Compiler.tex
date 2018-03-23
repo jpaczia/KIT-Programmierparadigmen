@@ -34,7 +34,7 @@ Class-Datei disassemblen: \href{https://docs.oracle.com/javase/7/docs/technotes/
 		
 		\textbf{TYPE}store x	& \multlineTable{x: Index der lokalen\\ Variable $0 \leq x \leq 255$\\ (x mit 1 Byte darstellbar) }	&	\multlineTable{speichert den obersten Wert auf dem\\ Stack mit Typ \enquote{TYPE} in Variable\\ mit Index x}	& \multlineTable{\texttt{istore 7}\\ speichere den obersten Wert auf\\ dem Stack vom Typ \enquote{Integer}\\ in Variable 7}	\\ \hline	
 		
-		bipush & \open & Beschreibung & Beispiel \\ \hline	
+		bipush const& \multlineTable{const: konstanter Wert,\\ der auf den Stack geladen\\ werden soll} & \multlineTable{Lade den geg. konstanten Wert\\ auf den Stack} & \multlineTable{bipush 10\\} \\ \hline	
 		
 		ldc & \open  & Beschreibung & Beispiel \\ \hline
 	\end{tabular}
