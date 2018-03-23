@@ -6,6 +6,25 @@ gleicher Ausdruck / Funktion, nur andere Namen $\Rightarrow$ durch Umbenennung T
 \subsection{$\eta$-Äquivalenz \slide{20}{167}}
 Zwei Funktionen sind gleich, falls Ergebnis gleich für alle Argumente
 
+\subsection{Divergenz \slide{20}{182}}
+Terme, die nicht zu einer Normalform auswerten, divergieren. Diese modellieren unendliche Ausführungen.
+
+\subsection{Rekursionsoperator \slide{20}{184}}
+$$Y= \lambda f.\; (\lambda x.\; f\; (x\; x))\; (\lambda x.\; f\; (x\; x))$$
+mit 
+$$f\; (Y\; f) \overset{\beta}{=} Y\; f$$ 
+\todo[inline]{$\overset{\beta}{=}$ Bedeutung: Gleich nach vollständiger $\beta$-Reduktion?}
+
+\subsection{Auswertungsstrategien}
+\begin{compactitem}
+	\item Volle $\beta$-Reduktion \slide{20}{177}: Jeder Redex kann jederzeit reduziert werden
+	\item Normalenreihenfolge \slide{20}{177}: Immer der linkeste äußerste Redex (der Parameter zur Verfügung hat) wird reduziert
+	\item Call-By-Name \slide{20}{189}: Reduziere linkesten äußersten Redex, der nicht von einem $\lambda$ umgeben ist\\
+	$\Rightarrow$ Reduziere Argumente erst, wenn benötigt
+	\item Call-By-Value \slide{20}{190}: Reduziere linkesten äußersten Redex, der nicht von einem $\lambda$ umgeben ist und dessen Argument ein Wert (d.h. max. ausgewertet, darf auch ein Lambda-Ausdruck sein) ist\\
+	$\Rightarrow$ werte Argumente vor Funktionsaufruf aus, dann setze max. ausgewertete Argumente ein
+\end{compactitem}
+
 \subsection{Church-Zahlen \slide{20}{179ff}}
 \begin{compactitem}
 	\item Zahlen:

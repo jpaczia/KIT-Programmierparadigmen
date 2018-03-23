@@ -83,8 +83,12 @@ break, applied to a predicate p and a list xs, returns a tuple where first eleme
 break p is equivalent to span (not . p).
 
 \eqCode
-\label{haskellBreak}
-\lstinputlisting[language=HASKELL]{codeExamples/DemoBreak.hs}
+\begin{lstlisting}[frame=single]
+splitWhen pred [] = ([], [])
+splitWhen pred (x:xs)
+	|pred x = ([], (x:xs))
+	|otherwise = let (ys, zs) = splitWhen pred xs in (x:ys, zs)
+\end{lstlisting}
 
 \funcSignature{stripPrefix :: Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Maybe\; [a] }
 The stripPrefix function drops the given prefix from a list. It returns Nothing if the list did not start with the prefix given, or Just the list after the prefix, if it does.
@@ -102,7 +106,11 @@ It is a special case of groupBy, which allows the programmer to supply their own
 
 \eqCode
 \label{haskellBreak}
-\lstinputlisting[language=HASKELL]{codeExamples/DemoGroup.hs}
+\begin{lstlisting}[frame=single]
+groups:: Eq t => [t] -> [[t]]
+groups [] = []
+groups (x:xs) = let (h, r) = break (/=x) xs in (x:h):groups r
+\end{lstlisting}
 
 \funcSignature{inits :: [a]\rightarrow [[a]] }
 The inits function returns all initial segments of the argument, shortest first. For example,
