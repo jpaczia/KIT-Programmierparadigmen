@@ -31,11 +31,8 @@ p: parallelisierbarer prozentualer Anteil des Programms
 	\item \texttt{MPI\_Comm\_WORLD}: Standard Communicator	
 	\item \texttt{MPI\_Init(\&argc, \&args)}: initialisiere MPI
 	\item \texttt{MPI\_Finalize()}: Clean-Up nach Ausführung von MPI
-	\item \texttt{MPI\_Comm\_rank(MPI\_Comm\_WORLD, \&my\_rank)}: my\_rank enthält den Rank des aktuellen Prozesses
-	\item \texttt{MPI\_Comm\_size(MPI\_Comm\_WORLD, \&size)}: size enthält Gesamtanzahl von Prozessen
-	\item \texttt{MPI\_Barrier(MPI\_Comm\_WORLD)}: Barriere, blockiert bis alle Prozesse die Barriere aufgerufen haben
-	\item \texttt{MPI\_Send(void* buffer, int count, MPI\_Datatype datatype, int dest, int tag, MPI\_Comm comm)}
-	\item \texttt{MPI\_Recv(void* buffer, int count, MPI\_Datatype datatype, int source, int tag, MPI\_Comm comm, MPI\_Status* status)}
+	\item \texttt{MPI\_Sendrecv\_replace}: \open
+	\item \texttt{MPI\_Sendrecv}: \open
 \end{compactitem}
 
 \newpage

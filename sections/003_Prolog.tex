@@ -1,12 +1,79 @@
 \chapter{Prolog}
+\section{Vergleich arithmetischer Ausdrücke}
 \begin{compactitem}
-	\item Vergleich arithmetischer Ausdrücke
-		\begin{compactitem}
-			\item gleich: \enquote{=:=}
-			\item ungleich: \enquote{=\textbackslash =}
-			\item kleiner: \enquote{$<$}
-			\item kleiner-gleich : \enquote{$=<$}
-			\item größer: \enquote{$>$}
-			\item größer-gleich: \enquote{$>=$}
-		\end{compactitem}
+	\item gleich: \enquote{=:=}
+	\item ungleich: \enquote{=\textbackslash =}
+	\item kleiner: \enquote{$<$}
+	\item kleiner-gleich : \enquote{$=<$}
+	\item größer: \enquote{$>$}
+	\item größer-gleich: \enquote{$>=$}
+\end{compactitem}
+
+\section{Funktionen für Listen}
+\begin{compactitem}
+	\item member \slide{31}{243}: Überprüfe ob Element in Liste enthalten
+		\begin{lstlisting}
+		member(X, [X|T]).
+		member(X, [Y|T]):- member(X, T).
+		\end{lstlisting}
+	\item append \slide{31}{243}: Hänge eine Liste an eine andere
+		\begin{lstlisting}
+		append([],L, L).
+		append([X|R], L, [X|T]):- append(R, L, T).
+		\end{lstlisting}
+		\enquote{Die Konkatenation von [] und L ist L. Wenn die Konkatenation von R und L die Liste T ergibt, dann ergibt die Konkatenation von [X|R] und L die Liste [X|T].}
+	\item reverse \slide{31}{245}: 		
+		\begin{lstlisting}
+		reverse([],[]).
+		reverse([X|R], Y):- reverse(R, Y1), append(Y1, [X], Y).
+		\end{lstlisting}
+		effizienter:
+		\begin{lstlisting}
+		reverse(X,Y):- reverse(X, [], Y).
+		reverse([], Y, Y).
+		reverse([X|R], A, Y):- reverse(R, [X|A], Y).
+		\end{lstlisting}
+	\item Quicksort \slide{31}{247}:
+		\begin{lstlisting}
+		qsort([],[]).
+		qsort([X|R],Y):- split(X,R,R1,R2),
+				 qsort(R1,Y1),
+				 qsort(R2,Y2),
+				 append(Y1,[X|Y2],Y).
+		split(X,[],[],[]).
+		split(X,[H|T],[H|R],Y):- X>H, split(X,T,R,Y).
+		split(X,[H|T],R,[H|Y]):- X=<H, split(X,T,R,Y).
+		\end{lstlisting}
+	\item Listenpermutation \slide{31}{248}:
+		\begin{lstlisting}
+		permute([],[]).
+		permute([X|R],P):- permute(R,P1),append(A,B,P1),append(A,[X|B],P).
+		\end{lstlisting}
+	\item lösche alle Elemente X aus Liste \exRef{Üb 8, Nr. 3}:
+		\begin{lstlisting}
+		del([],_,[]).
+		del([X|T1],X,L2)    :- del(T1,X,L2).
+		del([Y|T1],X,[Y|T2]):- del(T1,X,T2), not(X=Y).
+		\end{lstlisting}	
+	\item Listenlänge \exRef{WS 12/13, Nr. 3a}
+		\begin{lstlisting}
+		length([],0).
+		length([_|R], NewLength):- length(R,Length), NewLength is Length +1.
+		\end{lstlisting}
+	\item Test auf Duplikate:
+		\begin{lstlisting}
+		noDuplicates([]).
+		noDuplicates([H|T]):- not(member(H,T)), noDuplicates(T).
+		\end{lstlisting}
+	\item Entferne aufeinanderfolgende Duplikate:
+		\begin{lstlisting}
+		removeDuplicates([],[]).
+		removeDuplicates([H|[H|T]], L):- removeDuplicates([H|T],L).
+		removeDuplicates([H|T], [H|L]):- removeDuplicates(T,L).
+		\end{lstlisting}
+	\item Entferne alle Duplikate (auch wenn doppelte Elemente nicht direkt hintereinander sind):
+		\begin{lstlisting}
+		removeAllDuplicates([],[]).
+		removeDuplicates([H|T], [H|L]):- deleteElem(T,H,L1), removeDuplicates(L1,L).
+		\end{lstlisting}
 \end{compactitem}
