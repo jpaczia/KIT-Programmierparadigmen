@@ -4,6 +4,7 @@
 \usepackage{rotating}
 \usepackage{listings}
 
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage{tabularx}
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
@@ -15,13 +16,27 @@
 	bottom = 2cm
 }
 
+%\usepackage{showframe}% http://ctan.org/pkg/showframe
+\usepackage{titlesec}
+%\titleformat{\chapter}[hang] 
+%{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{} 
+
+\titleformat{\chapter}[hang] 
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{}
+
+%\titleformat{\chapter}[display]
+%{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter:}{1em}{}
+
+% this alters "before" spacing (the second length argument) to 0
+\titlespacing*{\chapter}{0pt}{0pt}{10pt}
+\titlespacing*{\section}{5pt}{0pt}{5pt}
+
 \usepackage{amssymb} 
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage[autostyle]{csquotes}
 \usepackage{graphicx}
 
-\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 \usepackage[colorlinks]{hyperref}
 \hypersetup{

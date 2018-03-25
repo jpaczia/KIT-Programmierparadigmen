@@ -4,7 +4,7 @@
 Class-Datei disassemblen: \href{https://docs.oracle.com/javase/7/docs/technotes/tools/windows/javap.html}{javap}
 
 \subsection{Präfixe / Suffixe}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\begin{tabular}{l|l}
@@ -19,8 +19,9 @@ Class-Datei disassemblen: \href{https://docs.oracle.com/javase/7/docs/technotes/
 		a	&	reference	\\
 	\end{tabular}
 \end{table}
+
 \subsection{Lesen / Schreiben von lokalen Variablen}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\begin{tabular}{l|l|l|l}
@@ -39,6 +40,7 @@ Class-Datei disassemblen: \href{https://docs.oracle.com/javase/7/docs/technotes/
 		ldc & \open  & Beschreibung & Beispiel \\ \hline
 	\end{tabular}
 \end{table}
+
 \myparagraph{Vergleich \enquote{iload\_x} vs. \enquote{iload x}}
 \begin{itemize}
 	\item \enquote{iload\_x} (mit Unterstrich): $x \in \{ 0,1,2,3 \}$ ist ein (einziger) Befehl, ohne Parameter. \enquote{x} ist schon im Opcode enthalten. Der Befehl besteht aus 1 Byte.
@@ -47,7 +49,7 @@ Class-Datei disassemblen: \href{https://docs.oracle.com/javase/7/docs/technotes/
 Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bevorzugt; vorausgesetzt x ist klein genug.
 
 \subsection{Lesen / Schreiben von Feldern}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\begin{tabular}{l|l|l|l}
@@ -61,7 +63,7 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 \end{table}
 
 \subsection{Sprungbefehle}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\begin{tabular}{l|l|l|l|}
@@ -81,9 +83,17 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		
 		ifnull LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Wert (/Referenz)\\ auf dem Stack \textbf{\texttt{NULL} ist},\\ dann springe zu dem geg. Label} & \multlineTable{ifnull then\\  analog zu \enquote{ifle}} \\ \hline	
 			
-		ifnonnull LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Wert (/Referenz)\\ auf dem Stack \textbf{nicht \texttt{NULL} ist},\\ dann springe zu dem geg. Label} & \multlineTable{ifnonnull then\\  analog zu \enquote{ifle} }\\ \hline \hline
-		
-		if\_icmpeq LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn die beiden obersten Integer-\\Werte auf dem Stack \textbf{gleich} sind,\\ springe zu dem geg. Label} & \multlineTable{if\_icmpeq then\\ springe zu then\\ \slide{73}{429} } \\ \hline
+		ifnonnull LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn der oberste Wert (/Referenz)\\ auf dem Stack \textbf{nicht \texttt{NULL} ist},\\ dann springe zu dem geg. Label} & \multlineTable{ifnonnull then\\  analog zu \enquote{ifle} }\\ 
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\label{my-label}
+	\begin{tabular}{l|l|l|l|}
+		Befehl & Parameter  & Beschreibung & Beispiel \\ \hline	
+				
+		if\_icmpeq LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn die beiden obersten Integer-\\Werte auf dem Stack \textbf{gleich} sind,\\ springe zu dem geg. Label} & \multlineTable{if\_icmpeq then\\ springe zu then\\ \slide{73}{426} } \\ \hline
 		
 		if\_icmpne LABEL & \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Wenn die beiden obersten Integer-\\Werte auf dem Stack \textbf{nicht gleich}\\ sind, springe zu dem geg. Label} &  \multlineTable{if\_icmpne then\\ analog zu \enquote{if\_icmpeq} } \\ \hline
 		
@@ -106,8 +116,9 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		goto LABEL	& \multlineTable{LABEL: analog zu \enquote{ifle}}  & \multlineTable{Springe bedingungslos zu dem geg.\\ Label} & \multlineTable{goto done\\ springe zu Label \enquote{done}\\ \slide{73}{411} }\\ \hline		
 	\end{tabular}
 \end{table}
+
 \subsection{Methodenaufrufe}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\caption{\href{https://www.javaworld.com/article/2860079/learn-java/dynamic-101.html}{Quelle}}
@@ -122,27 +133,27 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 		invokestatic \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
 		& \multlineTable{Rufe die \textbf{statische} Methode mit dem\\ geg. Index auf. Die Parameter der\\ Methode werden automatisch in den\\ Operandenstack geladen, \textbf{beginnend}\\ \textbf{bei Variablen-Index 0}\\ (statische Methode, somit keine \enquote{this}-Variable)} 
-		& \multlineTable{invokestatic \#2\\ analog zu \enquote{invokevirtual}}\\  \hline
+		& \multlineTable{invokestatic \#2\\ analog zu\\ \enquote{invokevirtual}}\\  \hline
 		
 		invokespecial \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
 		& \multlineTable{Rufe die \textbf{private, Superklassen-}\\ \textbf{oder Konstruktor-} Methode\\ mit dem geg. Index auf. Die Parameter der\\ Methode werden automatisch in den\\ Operandenstack geladen, \textbf{beginnend}\\ \textbf{bei Variablen-Index 1}\\ (Variablen-Index 0: this-Variable / Referenz)} 
-		& \multlineTable{invokespecial \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline
+		& \multlineTable{invokespecial \#2 \\ analog zu\\ \enquote{invokevirtual}} \\ \hline
 		
 		invokeinterface \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
 		& \multlineTable{Rufe eine \textbf{Interface} Methode auf,\\ wobei Implementierung des\\ aufrufenden Objektes verwendet wird} 
-		& \multlineTable{invokeinterface \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline
+		& \multlineTable{invokeinterface \#2 \\ analog zu\\ \enquote{invokevirtual}} \\ \hline
 		
 		invokedynamic \#INDEX 
 		& \multlineTable{INDEX:  analog zu\\ \enquote{invokevirtual}} 
 		& \open 
-		& \multlineTable{invokedynamic \#2 \\ analog zu \enquote{invokevirtual}} \\ \hline		
+		& \multlineTable{invokedynamic \#2 \\ analog zu\\ \enquote{invokevirtual}} \\ \hline		
 	\end{tabular}
 \end{table}
 
 \subsection{Objekterzeugung}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\begin{tabular}{l|l|l|l}
@@ -154,7 +165,7 @@ Da die Befehle mit Unterstrich Platz sparen, werden sie von realen Compilern bev
 \end{table}
 
 \subsection{Arithmetische Berechnungen}
-\begin{table}[h]
+\begin{table}[H]
 	\centering
 	\label{my-label}
 	\begin{tabular}{l|l|l|l}
