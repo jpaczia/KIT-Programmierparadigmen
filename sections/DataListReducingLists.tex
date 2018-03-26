@@ -7,6 +7,13 @@ Note that to produce the outermost application of the operator the entire input 
 Also note that if you want an efficient left-fold, you probably want to use foldl' instead of foldl. The reason for this is that latter does not force the "inner" results (e.g. z f x1 in the above example) before applying them to the operator (e.g. to (f x2)). This results in a thunk chain O(n) elements long, which then must be evaluated from the outside-in.\\
 For a general Foldable structure this should be semantically identical to,
 \codeEx{foldl f z = foldl f z . toList}
+\example
+\begin{lstlisting}
+Input: foldl (+) 0 [1,2,3,4] 
+Output: (((0+1)+2)+3)+4
+\end{lstlisting}
+\explain
+\textit{Der Startwert 0 wird als linker Operand in der innersten Klammer (ganz links) verwendet, der rechte Operand ist das erste Element der Liste (1). Das Ergebnis der innersten Klammer wird als linker Operand für die nächste Operation verwendet, der rechte Operand ist das zweite Element der Liste (2).}
 
 \funcSignature{foldl' :: Foldable\; t \Rightarrow (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow t\; a \rightarrow b }
 Left-associative fold of a structure but with strict application of the operator.\\
@@ -28,6 +35,12 @@ In the case of lists, foldr, when applied to a binary operator, a starting value
 Note that, since the head of the resulting expression is produced by an application of the operator to the first element of the list, foldr can produce a terminating expression from an infinite list.
 For a general Foldable structure this should be semantically identical to,
 \codeEx{foldr f z = foldr f z . toList}
+\example
+\begin{lstlisting}
+Input: foldr (+) 0 [1,2,3,4] 
+Output: (1+(2+(3+(4+0))))
+\end{lstlisting}
+\textit{Der Startwert 0 wird als rechter Operand in der innersten Klammer (ganz rechts) verwendet, der linke Operand ist das letzte Element der Liste (4). Das Ergebnis der innersten Klammer wird als rechter Operand für die nächste Operation verwendet, der linke Operand ist das zweit-letzte Element der Liste (3).}
 
 \funcSignature{foldr1 :: Foldable\; t \Rightarrow (a \rightarrow a \rightarrow a) \rightarrow t\; a \rightarrow a }
 A variant of foldr that has no base case, and thus may only be applied to non-empty structures.
@@ -35,8 +48,13 @@ A variant of foldr that has no base case, and thus may only be applied to non-em
 
 \newpage
 \subsection{Special folds}
-\funcSignature{concat :: Foldable\; t \Rightarrow t [a] \rightarrow [a]}
+\funcSignature{concat :: Foldable\; t \Rightarrow t\; [a] \rightarrow [a]}
 The concatenation of all the elements of a container of lists.
+\example
+\begin{lstlisting}
+Input: concat([1,2], [3,4]) 
+Output: [1,2,3,4]
+\end{lstlisting}
 
 \funcSignature{concatMap :: Foldable\; t \Rightarrow (a \rightarrow [b]) \rightarrow t\; a \rightarrow [b] }
 Map a function over all the elements of a container and concatenate the resulting lists.
