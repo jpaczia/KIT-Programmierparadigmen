@@ -77,3 +77,11 @@
 		removeDuplicates([H|T], [H|L]):- deleteElem(T,H,L1), removeDuplicates(L1,L).
 		\end{lstlisting}
 \end{compactitem}
+
+\section{Sonstige}
+\begin{compactitem}
+	\item atom(Term): True, falls Term mit einem Atom instanziiert ist \slide{32}{272}
+	\item atomic(Term): True, falls Term mit einem Atom instanziiert ist \slide{32}{272}
+	\item integer(Term): True, falls Term mit einem Integer instanziiert ist
+	\item var(Term): True, falls Term aktuell eine freie Variable ist
+\end{compactitem}
