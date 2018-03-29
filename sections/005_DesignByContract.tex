@@ -10,9 +10,10 @@
 		$a <==>$  & a und b äquivalent            											\\ \hline
 		$a <=!=>$  & a und b \textbf{nicht} äquivalent ($a \nleftrightarrow b$)            	\\ \hline
 		\textbackslash result  & Ergebnis der Methode            							\\ \hline
-		\textbackslash old(E)  & Wert von E, bevor die Methode ausgeführt wurde        		\\ \hline		
+		\textbackslash old(E)  & Wert von E, bevor die Methode ausgeführt wurde        		\\ \hline	
+		(\textbackslash forall declaration; range-expression; body-expression)  
+		& \multlineTable{(\textbackslash forall int i; 0 \textless = i \&\& i \textless size; \textbackslash old(elements[i])==elements[i])\\ für alle i zwischen 0 und \enquote{size} gilt: \textbackslash old(elements[i])==elements[i])}\\ \hline	
+		(\textbackslash exists declaration; range-expression; body-expression)  
+		& \multlineTable{(\textbackslash exists int i; 0 \textless = i \&\& i \textless size; \textbackslash old(elements[i])==elements[i])\\ es gibt ein i zwischen 0 und \enquote{size}, für das gilt:\\ \textbackslash old(elements[i])==elements[i])}\\ \hline
 	\end{tabular}
 \end{table}
-
-\todo[inline]{(\textbackslash forall)}
-\todo[inline]{(\textbackslash exists)}
