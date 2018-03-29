@@ -14,8 +14,20 @@ reverse xs returns the elements of xs in reverse order. xs must be finite.
 The intersperse function takes an element and a list and `intersperses' that element between the elements of the list. For example,
 \codeEx{intersperse ',' \enquote{abcde} == \enquote{a,b,c,d,e}}
 
+\begin{lstlisting}[frame=single]
+intersperse             :: a -> [a] -> [a]
+intersperse _   []      = []
+intersperse _   [x]     = [x]
+intersperse sep (x:xs)  = x : sep : intersperse sep xs
+\end{lstlisting}
+
 \funcSignature{intercalate :: [a] \rightarrow [[a]] \rightarrow [a] }
 intercalate xs xss is equivalent to (concat (intersperse xs xss)). It inserts the list xs in between the lists in xss and concatenates the result.
+
+\begin{lstlisting}[frame=single]
+intercalate :: [a] -> [[a]] -> [a]
+intercalate xs xss = concat (intersperse xs xss)
+\end{lstlisting}
 
 \funcSignature{transpose :: [[a]] \rightarrow [[a]] }
 The transpose function transposes the rows and columns of its argument. For example,
@@ -23,10 +35,33 @@ The transpose function transposes the rows and columns of its argument. For exam
 If some of the rows are shorter than the following rows, their elements are skipped:
 \codeEx{transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]}
 
+\begin{lstlisting}[frame=single]
+intercalate :: [a] -> [[a]] -> [a]
+intercalate xs xss = concat (intersperse xs xss)
+\end{lstlisting}
+
 \funcSignature{subsequences :: [a] \rightarrow [[a]] }
 The subsequences function returns the list of all subsequences of the argument.
 \codeEx{subsequences \enquote{abc} == [\enquote{}, \enquote{a},\enquote{b},\enquote{ab},\enquote{c},\enquote{ac},\enquote{bc},\enquote{abc}]}
+\begin{lstlisting}[frame=single]
+transpose               :: [[a]] -> [[a]]
+transpose []             = []
+transpose ([]   : xss)   = transpose xss
+transpose ((x:xs):xss) = (x:[h | (h:_) <- xss]) : transpose (xs:[t | (_:t) <- xss])
+\end{lstlisting}
 
 \funcSignature{permutations :: [a] \rightarrow [[a]] }
 The permutations function returns the list of all permutations of the argument.
 \codeEx{permutations \enquote{abc} == [\enquote{abc},\enquote{bac},\enquote{cba},\enquote{bca},\enquote{cab},\enquote{acb}]}
+\begin{lstlisting}[frame=single]
+permutations:: [a] -> [[a]]
+permutations xs0 =  xs0 : perms xs0 []
+  where
+    perms [] _  = []
+    perms (t:ts) is = foldr interleave (perms ts (t:is)) (permutations is)
+      where 
+        interleave xs r = let (_,zs) = interleave1 id xs r in zs
+        interleave1 _ [] r = (ts, r)
+        interleave1 f (y:ys) r = let (us,zs) = interleave1 (f . (y:)) ys r
+                                 in  (y:us, f (t:y:us) : zs)
+\end{lstlisting}

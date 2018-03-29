@@ -99,6 +99,15 @@ The stripPrefix function drops the given prefix from a list. It returns Nothing 
 	&\text{stripPrefix \enquote{foo} \enquote{barfoobaz} == Nothing}
 \end{align*}
 
+\checkImpl
+\begin{lstlisting}[frame=single]
+stripPrefix :: Eq a => [a] -> [a] -> Maybe [a]
+stripPrefix [] ys = Just ys
+stripPrefix (x:xs) (y:ys)
+  | x == y = stripPrefix xs ys
+stripPrefix _ _ = Nothing
+\end{lstlisting}
+
 \funcSignature{group :: Eq\; a\Rightarrow [a]\rightarrow [[a]] }
 The group function takes a list and returns a list of lists such that the concatenation of the result is equal to the argument. Moreover, each sublist in the result contains only equal elements. For example,
 \codeEx{group \enquote{Mississippi} = [\enquote{M},\enquote{i},\enquote{ss},\enquote{i},\enquote{ss},\enquote{i},\enquote{pp},\enquote{i}]}
@@ -118,17 +127,38 @@ The inits function returns all initial segments of the argument, shortest first.
 Note that inits has the following strictness property: inits (xs ++ \_\textbar\_) = inits xs ++ \_\textbar\_
 In particular, inits \_\textbar\_ = [] : \_\textbar\_
 
+\begin{lstlisting}[frame=single]
+inits:: [a] -> [[a]]
+inits [] = [[]]
+inits (x:xs) = [[]] ++ map (x:) (inits xs)
+\end{lstlisting}
+
 \funcSignature{tails :: [a]\rightarrow [[a]] }
 The tails function returns all final segments of the argument, longest first. For example,
 \codeEx{tails \enquote{abc} == [\enquote{abc}, \enquote{bc}, \enquote{c}, \enquote{}]}
 Note that tails has the following strictness property: tails \_\textbar\_ = \_\textbar\_ : \_\textbar\_
+\begin{lstlisting}[frame=single]
+tails :: [a] -> [[a]]
+tails [] =  [[]]
+tails xxs@(_:xs) = xxs : tails xs
+\end{lstlisting}
 
 \subsection{Predicates}
 \funcSignature{isPrefixOf :: Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Bool}
 The isPrefixOf function takes two lists and returns True iff the first list is a prefix of the second.
+\begin{lstlisting}[frame=single]
+isPrefixOf :: (Eq a) => [a] -> [a] -> Bool
+isPrefixOf [] _ = True
+isPrefixOf _  [] = False
+isPrefixOf (x:xs) (y:ys)= x == y && isPrefixOf xs ys
+\end{lstlisting}
 
 \funcSignature{isSuffixOf :: Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Bool}
 The isSuffixOf function takes two lists and returns True iff the first list is a suffix of the second. The second list must be finite.
+\begin{lstlisting}[frame=single]
+isSuffixOf :: (Eq a) => [a] -> [a] -> Bool
+isSuffixOf x y =  reverse x `isPrefixOf` reverse y
+\end{lstlisting}
 
 \funcSignature{isInfixOf :: Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Bool}
 The isInfixOf function takes two lists and returns True iff the first list is contained, wholly and intact, anywhere within the second.
@@ -136,7 +166,12 @@ The isInfixOf function takes two lists and returns True iff the first list is co
 	&\text{isInfixOf \enquote{Haskell} \enquote{I really like Haskell.} == True}\\
 	&\text{isInfixOf \enquote{Ial} \enquote{I really like Haskell.} == False}
 \end{align*}
+\begin{lstlisting}[frame=single]
+isInfixOf :: (Eq a) => [a] -> [a] -> Bool
+isInfixOf needle haystack = any (isPrefixOf needle) (tails haystack)
+\end{lstlisting}
 
 \funcSignature{isSubsequenceOf :: Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Bool}
 The isSubsequenceOf function takes two lists and returns True if all the elements of the first list occur, in order, in the second. The elements do not have to occur consecutively.
 isSubsequenceOf x y is equivalent to elem x (subsequences y).
+\skipped
