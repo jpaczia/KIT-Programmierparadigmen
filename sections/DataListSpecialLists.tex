@@ -1,6 +1,6 @@
 \section{Special lists}
 \subsection{Functions on strings}
-\funcSignature{lines :: String \rightarrow [String] }
+\funcSignature{lines::String \rightarrow [String] }
 lines breaks a string up into a list of strings at newline characters. The resulting strings do not contain newlines.\\
 Note that after splitting the string at newline characters, the last part of the string is considered a line even if it doesn't end with a newline. For example,
 \begin{align*}
@@ -14,35 +14,35 @@ Note that after splitting the string at newline characters, the last part of the
 \end{align*}
 Thus lines s contains at least as many elements as newlines in s.
 
-\funcSignature{words :: String \rightarrow [String] }
+\funcSignature{words::String \rightarrow [String] }
 words breaks a string up into a list of words, which were delimited by white space.
 
-\funcSignature{unlines :: [String] \rightarrow String}
+\funcSignature{unlines::[String] \rightarrow String}
 unlines is an inverse operation to lines. It joins lines, after appending a terminating newline to each.
 
-\funcSignature{unwords :: [String] \rightarrow String}
+\funcSignature{unwords::[String] \rightarrow String}
 unwords is an inverse operation to words. It joins words with separating spaces.
 
 \subsection{\enquote{Set} operations}
-\funcSignature{nub :: Eq\; a \Rightarrow [a] \rightarrow [a] }
+\funcSignature{nub::Eq\; a \Rightarrow [a] \rightarrow [a] }
 O($n^2$). The nub function removes duplicate elements from a list. In particular, it keeps only the first occurrence of each element. (The name nub means `essence'.) It is a special case of nubBy, which allows the programmer to supply their own equality test.
 
-\funcSignature{delete :: Eq\; a \Rightarrow a \rightarrow [a] \rightarrow [a] }
+\funcSignature{delete::Eq\; a \Rightarrow a \rightarrow [a] \rightarrow [a] }
 delete x removes the first occurrence of x from its list argument. For example,
 \codeEx{delete 'a' \enquote{banana} == \enquote{bnana}}
 It is a special case of deleteBy, which allows the programmer to supply their own equality test.
 
-\funcSignature{(\backslash \backslash) :: Eq\; a \Rightarrow [a] \rightarrow [a] \rightarrow [a]}
+\funcSignature{(\backslash \backslash)::Eq\; a \Rightarrow [a] \rightarrow [a] \rightarrow [a]}
 The $\backslash \backslash$ function is list difference (non-associative). In the result of xs \\ ys, the first occurrence of each element of ys in turn (if any) has been removed from xs. Thus
 \codeEx{(xs ++ ys) \textbackslash \textbackslash xs == ys.}
 It is a special case of deleteFirstsBy, which allows the programmer to supply their own equality test.
 
-\funcSignature{union :: Eq\; a \Rightarrow [a] \rightarrow [a] \rightarrow [a] }
+\funcSignature{union::Eq\; a \Rightarrow [a] \rightarrow [a] \rightarrow [a] }
 The union function returns the list union of the two lists. For example,
 \codeEx{\enquote{dog} `union` \enquote{cow} == \enquote{dogcw}}
 Duplicates, and elements of the first list, are removed from the the second list, but if the first list contains duplicates, so will the result. It is a special case of unionBy, which allows the programmer to supply their own equality test.
 
-\funcSignature{intersect :: Eq\; a \Rightarrow [a] \rightarrow [a] \rightarrow [a] }
+\funcSignature{intersect::Eq\; a \Rightarrow [a] \rightarrow [a] \rightarrow [a] }
 The intersect function takes the list intersection of two lists. For example,
 \codeEx{[1,2,3,4] `intersect` [2,4,6,8] == [2,4]}
 If the first list contains duplicates, so will the result.
@@ -50,14 +50,14 @@ If the first list contains duplicates, so will the result.
 It is a special case of intersectBy, which allows the programmer to supply their own equality test. If the element is found in both the first and the second list, the element from the first list will be used.
 
 \subsection{Ordered Lists}
-\funcSignature{sort :: Ord\; a \Rightarrow [a] \rightarrow [a] }
+\funcSignature{sort::Ord\; a \Rightarrow [a] \rightarrow [a] }
 The sort function implements a stable sorting algorithm. It is a special case of sortBy, which allows the programmer to supply their own comparison function.\\
 Elements are arranged from from lowest to highest, keeping duplicates in the order they appeared in the input.
 
-\funcSignature{sortOn :: Ord\; b \Rightarrow (a \rightarrow b) \rightarrow [a] \rightarrow [a] }
+\funcSignature{sortOn::Ord\; b \Rightarrow (a \rightarrow b) \rightarrow [a] \rightarrow [a] }
 Sort a list by comparing the results of a key function applied to each element. sortOn f is equivalent to sortBy (comparing f), but has the performance advantage of only evaluating f once for each element in the input list. This is called the decorate-sort-undecorate paradigm, or Schwartzian transform.\\
 Elements are arranged from from lowest to highest, keeping duplicates in the order they appeared in the input.\\
 Since: 4.8.0.0
 
-\funcSignature{insert :: Ord\; a \Rightarrow a \rightarrow [a] \rightarrow [a] }
+\funcSignature{insert::Ord\; a \Rightarrow a \rightarrow [a] \rightarrow [a] }
 The insert function takes an element and a list and inserts the element into the list at the first position where it is less than or equal to the next element. In particular, if the list is sorted before the call, the result will also be sorted. It is a special case of insertBy, which allows the programmer to supply their own comparison function.

@@ -59,6 +59,11 @@
 		\begin{lstlisting}
 		length([],0).
 		length([_|R], NewLength):- length(R,Length), NewLength is Length +1.
+		\end{lstlisting}	
+	\item Alle möglichen Teillisten einer Liste \exRef{Z-Üb 7, Nr.1.2}
+		\begin{lstlisting}
+		splits(L, ([], L)).
+		splits([X|L], ([X|S], E)):-splits(L,(S,E)).
 		\end{lstlisting}
 	\item Test auf Duplikate:
 		\begin{lstlisting}
@@ -75,6 +80,11 @@
 		\begin{lstlisting}
 		removeAllDuplicates([],[]).
 		removeDuplicates([H|T], [H|L]):- deleteElem(T,H,L1), removeDuplicates(L1,L).
+		\end{lstlisting}
+	\item letztes Element einer (nicht-leeren) Liste:
+		\begin{lstlisting}
+		lastElem([X],X).
+		lastElem([H|T], R):-lastElem(T,R).
 		\end{lstlisting}
 \end{compactitem}
 

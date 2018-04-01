@@ -1,48 +1,48 @@
 \section{Building lists}
 \subsection{Scans}
-\funcSignature{scanl :: (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
+\funcSignature{scanl::(b \rightarrow a \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
 scanl is similar to foldl, but returns a list of successive reduced values from the left:
 \codeEx{scanl f z [x1, x2, ...] == [z, z `f` x1, (z `f` x1) `f` x2, ...]}
 Note that
 \codeEx{last (scanl f z xs) == foldl f z xs.}
 
-\funcSignature{scanl' :: (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
+\funcSignature{scanl'::(b \rightarrow a \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
 A strictly accumulating version of scanl
 
-\funcSignature{scanl1 :: (a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow [a] }
+\funcSignature{scanl1::(a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow [a] }
 scanl1 is a variant of scanl that has no starting value argument:
 \codeEx{scanl1 f [x1, x2, ...] == [x1, x1 `f` x2, ...]}
 
-\funcSignature{scanr :: (a \rightarrow b \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
+\funcSignature{scanr::(a \rightarrow b \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
 scanr is the right-to-left dual of scanl. Note that
 \codeEx{head (scanr f z xs) == foldr f z xs.}
 
-\funcSignature{scanr1 :: (a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow [a] }
+\funcSignature{scanr1::(a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow [a] }
 scanr1 is a variant of scanr that has no starting value argument.
 
 \subsection{Accumulating maps}
-\funcSignature{mapAccumL :: Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t\; c) }
+\funcSignature{mapAccumL::Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t\; c) }
 The mapAccumL function behaves like a combination of fmap and foldl; it applies a function to each element of a structure, passing an accumulating parameter from left to right, and returning a final value of this accumulator together with the new structure.
 
-\funcSignature{mapAccumR :: Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t\; c) }
+\funcSignature{mapAccumR::Traversable\; t \Rightarrow (a \rightarrow b \rightarrow (a, c)) \rightarrow a \rightarrow t b \rightarrow (a, t\; c) }
 The mapAccumR function behaves like a combination of fmap and foldr; it applies a function to each element of a structure, passing an accumulating parameter from right to left, and returning a final value of this accumulator together with the new structure.
 
 \subsection{Infinite lists}
-\funcSignature{iterate :: (a \rightarrow a) \rightarrow a \rightarrow [a] }
+\funcSignature{iterate::(a \rightarrow a) \rightarrow a \rightarrow [a] }
 iterate f x returns an infinite list of repeated applications of f to x:
 \codeEx{iterate f x == [x, f x, f (f x), ...]}
 
-\funcSignature{repeat :: a \rightarrow [a] }
+\funcSignature{repeat::a \rightarrow [a] }
 repeat x is an infinite list, with x the value of every element.
 
-\funcSignature{replicate :: Int \rightarrow a \rightarrow [a] }
+\funcSignature{replicate::Int \rightarrow a \rightarrow [a] }
 replicate n x is a list of length n with x the value of every element. It is an instance of the more general genericReplicate, in which n may be of any integral type.
 
-\funcSignature{cycle :: [a] \rightarrow [a] }
+\funcSignature{cycle::[a] \rightarrow [a] }
 cycle ties a finite list into a circular one, or equivalently, the infinite repetition of the original list. It is the identity on infinite lists.
 
 \subsection{Unfolding}
-\funcSignature{unfoldr :: (b \rightarrow Maybe\; (a, b)) \rightarrow b \rightarrow [a] }
+\funcSignature{unfoldr::(b \rightarrow Maybe\; (a, b)) \rightarrow b \rightarrow [a] }
 The unfoldr function is a `dual' to foldr: while foldr reduces a list to a summary value, unfoldr builds a list from a seed value. The function takes the element and returns Nothing if it is done producing the list or returns Just (a,b), in which case, a is a prepended to the list and b is used as the next element in a recursive call. For example,
 \codeEx{iterate f == unfoldr (\textbackslash x -\textgreater Just (x, f x))}
 In some cases, unfoldr can undo a foldr operation:

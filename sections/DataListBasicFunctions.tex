@@ -1,5 +1,5 @@
 \section{Basic functions}
-\funcSignature{(++) :: [a] \rightarrow [a] \rightarrow [a]}
+\funcSignature{(++)::[a] \rightarrow [a] \rightarrow [a]}
 Append two lists, i.e.,
 \begin{align*}
 	&[x1, ..., xm] ++ [y1, ..., yn] == [x1, ..., xm, y1, ..., yn]\\
@@ -7,25 +7,25 @@ Append two lists, i.e.,
 \end{align*}
 If the first list is not finite, the result is the first list.
 
-\funcSignature{head :: [a] \rightarrow a }
+\funcSignature{head::[a] \rightarrow a }
 Extract the first element of a list, which must be non-empty.
 
-\funcSignature{last :: [a] \rightarrow a }
+\funcSignature{last::[a] \rightarrow a }
 Extract the last element of a list, which must be finite and non-empty.
 
-\funcSignature{tail :: [a] \rightarrow [a] }
+\funcSignature{tail::[a] \rightarrow [a] }
 Extract the elements after the head of a list, which must be non-empty.
 
-\funcSignature{init :: [a] \rightarrow [a] }
+\funcSignature{init::[a] \rightarrow [a] }
 Return all the elements of a list except the last one. The list must be non-empty.
 \skipped
 
-\funcSignature{uncons :: [a] \rightarrow Maybe (a, [a]) }
+\funcSignature{uncons::[a] \rightarrow Maybe (a, [a]) }
 Decompose a list into its head and tail. If the list is empty, returns Nothing. If the list is non-empty, returns Just (x, xs), where x is the head of the list and xs its tail.
 Since: 4.8.0.0
 
-\funcSignature{null :: Foldable\; t \Rightarrow t\; a \rightarrow Bool}
+\funcSignature{null::Foldable\; t \Rightarrow t\; a \rightarrow Bool}
 Test whether the structure is empty. The default implementation is optimized for structures that are similar to cons-lists, because there is no general way to do better.
 
-\funcSignature{length :: Foldable\; t \Rightarrow t\; a \rightarrow Int}
+\funcSignature{length::Foldable\; t \Rightarrow t\; a \rightarrow Int}
 Returns the size/length of a finite structure as an Int. The default implementation is optimized for structures that are similar to cons-lists, because there is no general way to do better.
