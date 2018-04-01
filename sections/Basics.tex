@@ -1,0 +1,14 @@
+\section{Sonstiges}
+\begin{itemize}
+	\item equal:: \enquote{==}
+	\item not equal:: \enquote{/=}
+\end{itemize}
+
+\funcSignature{changeListAt::(a -> a) -> Int -> [a] -> [a]} 
+\exRef{SS 16, Nr. 1}\\
+\texttt{changeListAt f i list}: Wendet auf das i-te Element der Liste \enquote{list} die Funktion f an.
+\begin{lstlisting}
+changeListAt f i []=[]
+changeListAt f 0 (x:xs) = ((f x):xs)
+changeListAt f i (x:xs) = x.(changeListAt f (i-1) xs)
+\end{lstlisting}

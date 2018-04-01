@@ -13,25 +13,25 @@
 \begin{compactitem}
 	\item member \slide{31}{243}: Überprüfe ob Element in Liste enthalten
 		\begin{lstlisting}
-		member(X, [X|T]).
-		member(X, [Y|T]):- member(X, T).
+		member(X,[X|T]).
+		member(X,[Y|T]):-member(X, T).
 		\end{lstlisting}
 	\item append \slide{31}{243}: Hänge eine Liste an eine andere
 		\begin{lstlisting}
-		append([],L, L).
-		append([X|R], L, [X|T]):- append(R, L, T).
+		append([],L,L).
+		append([X|R],L,[X|T]):-append(R,L,T).
 		\end{lstlisting}
 		\enquote{Die Konkatenation von [] und L ist L. Wenn die Konkatenation von R und L die Liste T ergibt, dann ergibt die Konkatenation von [X|R] und L die Liste [X|T].}
 	\item reverse \slide{31}{245}: 		
 		\begin{lstlisting}
 		reverse([],[]).
-		reverse([X|R], Y):- reverse(R, Y1), append(Y1, [X], Y).
+		reverse([X|R],Y):- reverse(R,Y1), append(Y1,[X],Y).
 		\end{lstlisting}
 		effizienter:
 		\begin{lstlisting}
-		reverse(X,Y):- reverse(X, [], Y).
-		reverse([], Y, Y).
-		reverse([X|R], A, Y):- reverse(R, [X|A], Y).
+		reverse(X,Y):-reverse(X, [], Y).
+		reverse([],Y,Y).
+		reverse([X|R],A,Y):-reverse(R,[X|A],Y).
 		\end{lstlisting}
 	\item Quicksort \slide{31}{247}:
 		\begin{lstlisting}
@@ -58,28 +58,43 @@
 	\item Listenlänge \exRef{WS 12/13, Nr. 3a}
 		\begin{lstlisting}
 		length([],0).
+<<<<<<< HEAD
 		length([_|R], NewLength):- length(R,Length), NewLength is Length +1.
 		\end{lstlisting}	
 	\item Alle möglichen Teillisten einer Liste \exRef{Z-Üb 7, Nr.1.2}
 		\begin{lstlisting}
 		splits(L, ([], L)).
 		splits([X|L], ([X|S], E)):-splits(L,(S,E)).
+=======
+		length([_|R],NewLength):- length(R,Length), NewLength is Length +1.
+		\end{lstlisting}	
+	\item alle möglichen Zerlegungen (Anfang- und Endteil) einer Liste \exRef{SS 13, Nr. 4b}
+		\begin{lstlisting}
+		splits(L,([],L)).
+		splits([X|L],([X|S], E)):- splits(L,(S,E)).
+		\end{lstlisting}	
+	\item alle Teillisten einer Liste\exRef{WS 15/16, Nr. 3a}
+		\begin{lstlisting}
+		sublists([],[]).
+		sublists([X|L],[X|L2]):-sublists(L,L2).
+		sublists([_|L],L2):-sublists(L,L2).
+>>>>>>> c54c54954143bcf252fd91a88d2b9c0b3874f131
 		\end{lstlisting}
 	\item Test auf Duplikate:
 		\begin{lstlisting}
 		noDuplicates([]).
-		noDuplicates([H|T]):- not(member(H,T)), noDuplicates(T).
+		noDuplicates([H|T]):-not(member(H,T)),noDuplicates(T).
 		\end{lstlisting}
 	\item Entferne aufeinanderfolgende Duplikate:
 		\begin{lstlisting}
 		removeDuplicates([],[]).
-		removeDuplicates([H|[H|T]], L):- removeDuplicates([H|T],L).
-		removeDuplicates([H|T], [H|L]):- removeDuplicates(T,L).
+		removeDuplicates([H|[H|T]],L):- removeDuplicates([H|T],L).
+		removeDuplicates([H|T],[H|L]):- removeDuplicates(T,L).
 		\end{lstlisting}
 	\item Entferne alle Duplikate (auch wenn doppelte Elemente nicht direkt hintereinander sind):
 		\begin{lstlisting}
 		removeAllDuplicates([],[]).
-		removeDuplicates([H|T], [H|L]):- deleteElem(T,H,L1), removeDuplicates(L1,L).
+		removeDuplicates([H|T],[H|L]):- deleteElem(T,H,L1), removeDuplicates(L1,L).
 		\end{lstlisting}
 	\item letztes Element einer (nicht-leeren) Liste:
 		\begin{lstlisting}

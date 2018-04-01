@@ -124,7 +124,7 @@ groups (x:xs) = let (h, r) = break (/=x) xs in (x:h):groups r
 \funcSignature{inits::[a]\rightarrow [[a]] }
 The inits function returns all initial segments of the argument, shortest first. For example,
 \codeEx{inits "abc" == ["","a","ab","abc"]}
-Note that inits has the following strictness property: inits (xs ++ \_\textbar\_) = inits xs ++ \_\textbar\_
+Note that inits has the following strictness property: inits (xs ++ \_\textbar\_) = inits xs ++ \_\textbar\_ \\
 In particular, inits \_\textbar\_ = [] : \_\textbar\_
 
 \begin{lstlisting}[frame=single]
