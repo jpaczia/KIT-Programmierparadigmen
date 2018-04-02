@@ -172,6 +172,6 @@ isInfixOf needle haystack = any (isPrefixOf needle) (tails haystack)
 \end{lstlisting}
 
 \funcSignature{isSubsequenceOf::Eq\; a\Rightarrow [a]\rightarrow [a]\rightarrow Bool}
-The isSubsequenceOf function takes two lists and returns True if all the elements of the first list occur, in order, in the second. The elements do not have to occur consecutively.
+The isSubsequenceOf function takes two lists and returns True if all the elements of the first list occur, in order, in the second. The elements do not have to occur consecutively.\\
 isSubsequenceOf x y is equivalent to elem x (subsequences y).
 \skipped

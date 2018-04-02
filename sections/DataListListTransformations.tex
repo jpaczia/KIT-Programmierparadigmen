@@ -36,18 +36,24 @@ If some of the rows are shorter than the following rows, their elements are skip
 \codeEx{transpose [[10,11],[20],[],[30,31,32]] == [[10,20,30],[11,31],[32]]}
 
 \begin{lstlisting}[frame=single]
-intercalate::[a] -> [[a]] -> [a]
-intercalate xs xss = concat (intersperse xs xss)
+transpose              ::[[a]] -> [[a]]
+transpose []             = []
+transpose ([]   : xss)   = transpose xss
+transpose ((x:xs):xss) = (x:[h | (h:_) <- xss]) : transpose (xs:[t | (_:t) <- xss])
 \end{lstlisting}
 
 \funcSignature{subsequences::[a] \rightarrow [[a]] }
 The subsequences function returns the list of all subsequences of the argument.
 \codeEx{subsequences \enquote{abc} == [\enquote{}, \enquote{a},\enquote{b},\enquote{ab},\enquote{c},\enquote{ac},\enquote{bc},\enquote{abc}]}
 \begin{lstlisting}[frame=single]
-transpose              ::[[a]] -> [[a]]
-transpose []             = []
-transpose ([]   : xss)   = transpose xss
-transpose ((x:xs):xss) = (x:[h | (h:_) <- xss]) : transpose (xs:[t | (_:t) <- xss])
+subsequences            :: [a] -> [[a]]
+subsequences xs         =  [] : nonEmptySubsequences xs
+
+--nonEmptySubsequences "abc" == ["a","b","ab","c","ac","bc","abc"]
+nonEmptySubsequences         :: [a] -> [[a]]
+nonEmptySubsequences []      =  []
+nonEmptySubsequences (x:xs)  =  [x] : foldr f [] (nonEmptySubsequences xs)
+  where f ys r = ys : (x : ys) : r
 \end{lstlisting}
 
 \funcSignature{permutations::[a] \rightarrow [[a]] }
