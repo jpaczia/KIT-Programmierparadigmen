@@ -7,10 +7,10 @@ Note that after splitting the string at newline characters, the last part of the
 	&\text{lines \enquote{} == []}\\
 	&\text{lines \enquote{\textbackslash n} == [\enquote{}]}\\
 	&\text{lines \enquote{one} == [\enquote{one}]}\\
-	&\text{lines \enquote{one\textbackslash } == [\enquote{one}]}\\
-	&\text{lines \enquote{one\textbackslash \textbackslash } == [\enquote{one},\enquote{}]}\\
-	&\text{lines \enquote{one\textbackslash two} == [\enquote{one},\enquote{two}]}\\
-	&\text{lines \enquote{one\textbackslash two\textbackslash } == [\enquote{one},\enquote{two}]}
+	&\text{lines \enquote{one\textbackslash n} == [\enquote{one}]}\\
+	&\text{lines \enquote{one\textbackslash n\textbackslash n} == [\enquote{one},\enquote{}]}\\
+	&\text{lines \enquote{one\textbackslash ntwo} == [\enquote{one},\enquote{two}]}\\
+	&\text{lines \enquote{one\textbackslash ntwo\textbackslash n} == [\enquote{one},\enquote{two}]}
 \end{align*}
 Thus lines s contains at least as many elements as newlines in s.
 
