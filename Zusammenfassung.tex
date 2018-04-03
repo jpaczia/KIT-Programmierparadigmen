@@ -47,6 +47,26 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{listings}
+\lstset{	
+	commentstyle=\it,
+	emphstyle={\bf\ttfamily},
+	stringstyle=\mdseries\ttfamily,	
+	keywordstyle=\bfseries\ttfamily,
+	basicstyle=\small\ttfamily,	
+	numberstyle=\ttfamily\tiny\color[gray]{0.3},
+	tabsize=4,	
+	%xleftmargin=2pt,
+	%stepnumber=1,
+	%numbers=left,
+	%numbersep=5pt,
+	%  belowcaptionskip=\bigskipamount,
+	%  captionpos=b,
+	%  escapeinside={*'}{'*},
+	%  showspaces=false,
+	%showstringspaces=false,
+	%morecomment=[l]\%,
+	%escapeinside={<@}{@>},
+}
 
 
 \setlength{\marginparwidth}{2cm}
@@ -75,7 +95,7 @@
 \newcommand{\engquote}[1]{\foreignblockquote{english}{#1}}
 \newcommand{\multlineTable}[1]{\begin{tabular}[c]{@{}l@{}}\\#1\\ \end{tabular}}
 \definecolor{light-gray}{gray}{0.9}
-\newcommand{\exRef}[1]{ \colorbox{light-gray}{(#1)}}
+\newcommand{\exRef}[1]{ \colorbox{light-gray}{(Ref.: #1)}}
 
 
 
@@ -100,6 +120,8 @@
 \tableofcontents
 
 \include{sections/000_Questions}
+
+\include{sections/Basics}
 %\include{sections/001_Haskell}
 \include{sections/002_theoBasics}
 

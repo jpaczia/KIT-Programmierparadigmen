@@ -31,7 +31,27 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{listings}
-\lstset{language=Haskell} 
+\lstset{	
+	commentstyle=\it,
+	emphstyle={\bf\ttfamily},
+	stringstyle=\mdseries\ttfamily,	
+	keywordstyle=\bfseries\ttfamily,
+	basicstyle=\small\ttfamily,	
+	numberstyle=\ttfamily\tiny\color[gray]{0.3},
+	language=haskell,
+	tabsize=4,	
+	%xleftmargin=2pt,
+	%stepnumber=1,
+	%numbers=left,
+	%numbersep=5pt,
+	%  belowcaptionskip=\bigskipamount,
+	%  captionpos=b,
+	%  escapeinside={*'}{'*},
+	%  showspaces=false,
+	%showstringspaces=false,
+	%morecomment=[l]\%,
+	%escapeinside={<@}{@>},
+}
 
 
 \setlength{\marginparwidth}{2cm}
@@ -90,7 +110,7 @@
 %\listoftodos
 \tableofcontents
 
-\include{sections/Basics}
+%\include{sections/Basics}
 
 \include{sections/DataListBasicFunctions}
 \include{sections/DataListListTransformations}
