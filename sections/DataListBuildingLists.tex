@@ -40,6 +40,11 @@ replicate n x is a list of length n with x the value of every element. It is an 
 
 \funcSignature{cycle::[a] \rightarrow [a] }
 cycle ties a finite list into a circular one, or equivalently, the infinite repetition of the original list. It is the identity on infinite lists.
+\example
+\begin{lstlisting}
+Input: take 10 (cycle [1,2,3])
+Output: [1,2,3,1,2,3,1,2,3,1]
+\end{lstlisting}
 
 \subsection{Unfolding}
 \funcSignature{unfoldr::(b \rightarrow Maybe\; (a, b)) \rightarrow b \rightarrow [a] }
