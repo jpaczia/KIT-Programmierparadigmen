@@ -1,223 +1,80 @@
-\lstset{language=Haskell}
 \chapter{Haskell}
-\section{Allgemein}
-\begin{compactitem}
-	\item Guards (\enquote{$|$} müssen weiter rechts als Funktionsname stehen)
-	\item ungleich: /=
-\end{compactitem}
-\section{Nützliche Funktionen}
-\subsection{Listen}
-\funcSignature{(++) :: [a] \rightarrow [a] \rightarrow [a]}
-Fügt zwei Listen zusammen. Falls die erste Liste nicht endlich lang ist, ist das Ergebnis die erste Liste.
-\example
-$$[x1, ..., xm] ++ [y1, ..., yn] == [x1, ..., xm, y1, ..., yn]$$
-$$[x1, ..., xm] ++ [y1, ..] == [x1, ..., xm, y1, ..]$$
+\begin{itemize}
+	\item equal:: \enquote{==}
+	\item not equal:: \enquote{/=}
+\end{itemize}
 
-\funcSignature{head :: [a] \rightarrow a}
-Gibt das erste Element einer nicht-leeren Liste zurück. Falls die Liste leer ist, wird eine Exception geworfen.
-\example
-$$ head [1,2,3,4] = 1$$
+\funcSignature{changeListAt::(a -> a) -> Int -> [a] -> [a]} 
+\exRef{SS 16, Nr. 1}\\
+\texttt{changeListAt f i list}: Wendet auf das i-te Element (1. Element hat Index 0) der Liste \enquote{list} die Funktion f an.
+\begin{lstlisting}
+changeListAt f i []=[]
+changeListAt f 0 (x:xs) = ((f x):xs)
+changeListAt f i (x:xs) = x.(changeListAt f (i-1) xs)
+\end{lstlisting}
 
-\funcSignature{last :: [a] \rightarrow a}
-Gibt das letzte Element einer nicht-leeren, endlichen Liste zurück. Falls die Liste leer ist, wird eine Exception geworfen, ist die Liste nicht endlich terminiert die Funktion nicht.
-\example
-$$last [1,2,3] = 1$$
+\funcSignature{isPalindrom::Eq a => [a] -> Bool}
+\texttt{isPalindrom list} überprüft es sich bei der Liste \enquote{list} um ein Palindrom handelt 
+\begin{lstlisting}
+isPalindrom xs = foldl (&&) True (zipWith (\x y -> x==y) xs (myRev1 xs))
+\end{lstlisting}
 
-\funcSignature{(!!) :: [a] \rightarrow Int \rightarrow a }
-\enquote{$xs!!i$} gibt das i-te Element von Liste xs zurück. (Erstes Element hat Index 0)
-\example
-$$[0,1,2,3]!!1 == 1$$
+\funcSignature{flatten::[[a]] -> [a]}
+Transform a list, possibly holding lists as elements into a `flat' list by replacing each list with its elements (recursively). 
+\begin{lstlisting}
+data NestedList a = Elem a | List [NestedList a]
 
-\funcSignature{tail :: [a] \rightarrow [a]}
-Gibt alle Elemente einer nicht-leeren Liste außer dem ersten zurück. Falls die Liste leer ist, wird eine Exception geworfen.
-\example
-$$tail [1,2,3,4] = [2,3,4]$$
+flatten (Elem a)      = [a]
+flatten (List [])     = []
+flatten (List (x:xs)) = (flatten x) ++ (flatten (List xs))
+flatten (List [])     = []
+\end{lstlisting}
 
-\funcSignature{init :: [a] \rightarrow [a]}
-$init x$ gibt die Liste aller Elemente von Liste x zurück, außer dem letzten Element von x
-\example
-$$init [1,2,3,4] == [1,2,3]$$
+\funcSignature{compress::Eq a => [a] -> [a]}
+Entferne aufeinanderfolgende Duplikate in einer Liste
+\begin{lstlisting}
+compress []     = []
+compress (x:xs) = x : (compress $ dropWhile (== x) xs)
+\end{lstlisting}
 
-\funcSignature{null :: Foldable \; t \Rightarrow t \; a \rightarrow Bool}
-Testet ob die Struktur (Liste) leer ist.
-\example
-$$null\; [1,2] == False$$
-$$null\; [\,] == True$$
+\funcSignature{pack::Eq a => [a] -> [[a]]}
+Speichere aufeinanderfolgende Duplikate aus der Eingabeliste in Unterlisten. Falls sich Elemente aus der Eingabeliste wiederholen und nicht direkt aufeinanderfolgen, werden diese in separate Unterlisten gespeichert.
+\begin{lstlisting}
+pack::Eq a => [a] -> [[a]]
+pack [] = []
+pack (x:xs) = (x:(filter (==x) xs)):(pack $ filter (/=x) xs)
+\end{lstlisting}
 
-\funcSignature{length :: Foldable \; t \Rightarrow t \; a \rightarrow Int}
-Bestimmt die Größe/Länge einer endlichen Liste, d.h. die Anzahl der Elemente.
-\example
-$$length\; [] == 0$$
-$$length\; [1,2,3] == 3$$
+\funcSignature{duplicate::[a] -> [a]}
+Dupliziere die Elemente einer Liste
+\begin{lstlisting}
+duplicate []     = []
+duplicate (x:xs) = x x:(duplicate xs)
+\end{lstlisting}
 
-\funcSignature{drop:: Int \rightarrow [a] \rightarrow [a]}
-$drop\; n\; xs$ Gibt die Teilliste nach dem n-ten Element zurück, oder die leere Liste [], wenn $n > length\; xs$:
-\example
-$$drop\; 6\; \text{\enquote{Hello World!}} == \text{\enquote{World!}}$$
-$$drop\; 3\; [1,2,3,4,5]\; == [4,5]$$
-$$drop\; 3\; [1,2]\; == []$$
-$$drop\; 3\; []\; == []$$
-$$drop\; (-1)\; [1,2] == [1,2]$$
-$$drop\; 0\; [1,2] == [1,2]$$
+\funcSignature{replicate::[a] -> Int -> [a]}
+\texttt{replicate list n} repliziert die Elemente der Liste \enquote{list} n-mal
+\begin{lstlisting}
+repli xs n = concat [f x | x <- xs]
+  where f x = take n (repeat x)
+\end{lstlisting}
 
-\funcSignature{takeWhile :: (a \rightarrow Bool) \rightarrow [a] \rightarrow [a] }
-$takeWhile\; pred\; xs$ Gibt den längst-möglichen Prefix (möglicherweise leer) mit Elementen von Liste xs zurück, die das Prädikat $pred$ erfüllen
-\example
-$$takeWhile\; (< 3)\; [1,2,3,4,1,2,3,4] == [1,2]$$
-$$takeWhile\; (< 9)\; [1,2,3] == [1,2,3]$$
-$$takeWhile\; (< 0)\; [1,2,3] == []$$
+\funcSignature{dropEvery::[a] -> Int -> [a]}
+\texttt{dropEvery list n} entfernt jedes n-te Element aus der Liste
+$$\text{dropEvery [1,2,3,4] 2 == [1,3]}$$
+\begin{lstlisting}
+dropEvery list count = helper list count count
+  where 
+    helper [] _ _ = []
+    helper (x:xs) count 1 = helper xs count count
+    helper (x:xs) count n = x : (helper xs count (n - 1))
+\end{lstlisting}
 
-\funcSignature{dropWhile :: (a \rightarrow Bool) \rightarrow [a] \rightarrow [a] }
-$dropWhile\; pred\; xs$ gibt den Suffix (möglicherweise leer) der Elemente von Liste xs zurück, ab dem ersten Element, das das Prädikat nicht erfüllt (erstes, nicht-erfüllendes Element inklusive)
-$$dropWhile\; (< 3)\; [1,2,3,4,5,1,2,3] == [3,4,5,1,2,3]$$
-$$dropWhile\; (< 9)\; [1,2,3] == []$$
-$$dropWhile\; (< 0)\; [1,2,3] == [1,2,3]$$
-
-\funcSignature{map :: (a \rightarrow b) \rightarrow [a] \rightarrow [b] }
-$map\; f\; xs$ wendet die Funktion \enquote{f} auf die Elemente der Liste \enquote{xs} an und gibt die Rückgabewerte als Liste zurück.
-\example
-$$map\; f\; [x1, x2, ..., xn] == [f\; x1, f\; x2, .., f\; xn]$$
-$$map\; f\; [x1, x2, ..] == [f\; x1, f\; x2, ..]$$
-
-
-\funcSignature{reverse :: [a] \rightarrow [a] }
-Gibt eine endliche Liste in umgekehrter Reihenfolge zurück.
-$$reverse [1,2,3] == [3,2,1]$$
-
-\funcSignature{foldr :: Foldable\; t \Rightarrow (a \rightarrow b \rightarrow b) \rightarrow b \rightarrow t\; a \rightarrow b \textbf{ oder: }\\ foldr::(a\rightarrow b \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow b}
-$foldr\; op\; i\; xs$: Wende Operation op auf Elemente der Liste xs an, verwende für erste Ausführung der Operation die Operanden $i$ (links neben op, d.h. linker Operand) und $last\; xs$ (rechts neben op, d.h. rechter Operand). 
-Die restlichen Elemente der Liste werden rechts-geklammert verknüpft, d.h. das Ergebnis der vorherigen Operations-Ausführung wird als rechter Operand verwendet und das nächste Element der Liste als linker Operand.\\
-\textbf{Die Elemente der Liste werden von Ende $\rightarrow$ Anfang abgearbeitet.}
-\example
-$$foldr\; (+)\; 0\; [1,2,3,4] == (1+(2+(3+(4+0))))==10$$
-\explain
-\textit{Der Startwert 0 wird als rechter Operand in der innersten Klammer (ganz rechts) verwendet, der linke Operand ist das letzte Element der Liste. Das Ergebnis der innersten Klammer wird als rechter Operand für die nächste Operation verwendet, der linke Operand ist das zweit-letzte Element der Liste.}
-
-\funcSignature{foldl :: Foldable \; t \Rightarrow (a \rightarrow b \rightarrow a) \rightarrow a \rightarrow t \; b \rightarrow a \textbf{ oder: }\\ foldl::(a\rightarrow b \rightarrow a) \rightarrow a \rightarrow [b] \rightarrow a }
-$foldl\; op\; i\; xs$: Wende Operation op auf Elemente der Liste xs an, verwende für erste Ausführung der Operation die Operanden $i$ (links neben op, d.h. linker Operand) und $head\; xs$ (rechts neben op, d.h. rechter Operand). 
-Die restlichen Elemente der Liste werden links-geklammert verknüpft, d.h. das Ergebnis der vorherigen Operations-Ausführung wird als linker Operand verwendet und das nächste Element der Liste als rechter Operand.\\
-\textbf{Die Elemente der Liste werden von Anfang $\rightarrow$ Ende abgearbeitet.}
-\example
-$$foldl\; (+)\; 0\; [1,2,3,4] == ( ( ( (0+1) +2 ) +3 ) +4) == 10$$
-\explain
-\textit{Der Startwert 0 wird als linker Operand in der innersten Klammer (ganz links) verwendet, der rechte Operand ist das erste Element der Liste. Das Ergebnis der innersten Klammer wird als linker Operand für die nächste Operation verwendet, der rechte Operand ist das zweite Element der Liste.}
-
-\funcSignature{concat :: [[a]] \rightarrow [a]  }
-Nimmt eine Liste von Listen als Eingabe entgegen und hängt die einzelnen Listen aneinander, sodass eine große Liste entsteht. Die Reihenfolge der Elemente wird beibehalten und Elemente können mehrmals auftreten.
-\example
-$$concat\; [ [1,3],[2,4,3] ]== [1,3,2,4,3]$$
-
-\funcSignature{scanl :: (b \rightarrow a \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
-(Ähnlich zu $foldl$)\\
-$scanl\; op\; z\; L$: Gibt Liste E zurück, mit 
-\begin{align*} 
-E_1 &= z \qquad \textit{//erstes Element von Liste E} \\
-\forall i \in \{2,\; length(xs)\} : E_i &= (E_{i-1})\; op\; (L_{i-1})
-\end{align*}
-\equal
-$$last\; (scanl\; f\; z\; xs) == foldl\; f\; z\; xs$$
-\example
-$$scanl\; (+)\; 0\; [1,1,1] == [0, 0+1,(0+1) +1, ((0+1)+1)] == [0,1,2,3]$$
-
-\funcSignature{scanl1 :: (a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow [a] }
-Variante von $scanl$, ohne Startwert
-\example
-$$scanl1\; f\; [x1, x2,...] == [x1, x1\; `f`\; x2, ...]$$
-$$scanl1\; (+)\; [1,2,3,4] == scanl1\; (\backslash x\; y \rightarrow x+y)\; [1,2,3,4] == [1,3,6,10]$$
-
-\funcSignature{scanr :: (a \rightarrow b \rightarrow b) \rightarrow b \rightarrow [a] \rightarrow [b] }
-Analog zu $scanl$, beginnend am Anfang der Liste
-\equal
-$$head\; (scanr\; f\; z\; xs) == foldr\; f\; z\; xs$$
-\example
-$$scanr\; op\; i\; [x1,x2,x3,x4] == [i\; `op`\; (x4)]$$
-\begin{align*} 
-scanr\; (\backslash x\; y \rightarrow (x+y)/2)\; 2\; [1,2,3,4] 
-&== [2.0, (2.0+4)/2, (3.0+3)/2, (3.0+2)/2, (2.5+1)/2] \\
-&== [2.0, (6)/2, (6)/2, (5)/2, (3.5)/2]\\
-&== [2.0,3.0,3.0,3.5,1.75]
-\end{align*}
-
-\funcSignature{scanr1 :: (a \rightarrow a \rightarrow a) \rightarrow [a] \rightarrow [a] }
-Variante von $scanr$, ohne Startwert
-\example
-$$scanr1\; f\; [x1,x2,x3,x4] == [x4, x4\; `f`\; x3, (x4 `f`\; x3)\; `f`\; x2, ((x4\; `f`\; x3)\; `f`\; x2)\; `f`\; x1]$$
-
-\funcSignature{iterate :: (a \rightarrow a) \rightarrow a \rightarrow [a] }
-$iterate\; f\; x$ gibt die unendliche Liste zurück, die durch das wiederholte Anwenden der Funktion auf das vorherige Listenelement entsteht, das erste Listenelement der Liste ist $x$.
-Das heißt $iterate\; f\; x == [x, f\; x, f (f\; x), ...]$.
-\example
-$$iterate\; (\backslash x \rightarrow x+1)\; 0 == [0, 0+1, (0+1)+1, ((0+1)+1)+1,..] == [0, 1, 2, 3, ..]$$
-
-\funcSignature{span :: (a \rightarrow Bool) \rightarrow [a] \rightarrow ([a], [a]) }
-$span\; pred\; xs$ Liefert Tupel mit zwei Listen zurück, die erste Liste des Tupels ist der längst-mögliche Prefix (möglicherweise leer) der Liste xs, mit Elementen die das Prädikat $pred$ erfüllen. Die zweite Liste des Tupels ist der Rest der Liste xs, ab dem Element, welches das Prädikat $pred$ nicht mehr erfüllt. Ist die Liste xs leer, wird ein Tupel mit zwei leeren Listen zurückgegeben.
-\equal
-$$span\; p\; xs == (takeWhile\; p\; xs, dropWhile\; p\; xs)$$
-\example
-$$span\; (<3)\; [1,2,3,4,1,2,3,4]==([1,2],[3,4,1,2,3,4])$$
-$$span\; (<3)\; [1,2] == ([1,2], [])$$
-$$span\; (<3)\; [3,4] == ([], [3,4])$$
-
-\funcSignature{break :: (a \rightarrow Bool) \rightarrow [a] \rightarrow ([a], [a]) }
-$break\; pred\; xs$ Liefert Tupel mit zwei Listen zurück, die erste Liste des Tupels ist der längst-mögliche Prefix (möglicherweise leer) der Liste xs, mit Elementen die das Prädikat $pred$ nicht erfüllen. Die zweite Liste des Tupels ist der Rest der Liste xs, ab dem Element, welches das Prädikat $pred$ erfüllt. Ist die Liste xs leer, wird ein Tupel mit zwei leeren Listen zurückgegeben.
-\equal
-$$break\; p\; xs == (takeWhile\; p\; xs, dropWhile\; p\; xs)$$
-\example
-$$break\; (>3)\; [1,2,3,4,1,2,3,4]==([1,2,3],[4,1,2,3,4])$$
-$$break\; (<9)\; [1,2,3] == ([], [1,2,3])$$
-$$break\; (>3)\; [1,2,3] == ([1,2,3], [])$$
-
-
-\funcSignature{filter :: (a \rightarrow Bool) \rightarrow [a] \rightarrow [a] }
-Gibt einer Liste aller Elemente aus der Eingabeliste zurück, die das Eingabeprädikat erfüllen. Die Reihenfolge der Elemente in der Ausgabeliste entspricht der Reihenfolge in der Eingabeliste, Elemente treten so oft auf, wie in der Eingabeliste.
-\equal
-$$filter\; pred\; xs == [x | x \leftarrow xs, pred x]$$
-\example
-$$filter\; (<3) [1,2,3,4,1,2] == [1,2,1,2]$$
-
-\funcSignature{zip :: [a] \rightarrow [b] \rightarrow [(a, b)] }
-Verarbeitet zwei Listen zu einer Liste aus Tupeln mit zwei Elementen. Das erste Elemente des i-ten Tupels ist das i-te Element der ersten Eingabeliste, das zweite Element das i-te Element der zweiten Eingabeliste. Unterscheiden sich die Längen der Eingabelisten, entspricht die Länge der Ausgabeliste der kürzeren Eingabeliste. Die überschüssigen Elemente der längeren Liste werden nicht in die Ausgabeliste aufgenommen.
-\example
-$$zip\; [1,2,3]\; [4,5,6] == [(1,4), (2,5), (3,6)]$$
-$$zip\; [1,2,3]\; [4,5,6,7,8] == [(1,4), (2,5), (3,6)]\qquad \textit{//Ausgabeliste gleich lang wie kürzere Eingabeliste}$$
-$$zip\; []\; [4,5,6] == []$$
-\analog{zip3, zip4, zip5, zip6, zip7}
-Verarbeiten 3,4,5,6,7 Eingabelisten und geben eine Liste von Tupeln mit 3,4,5,6,7 Elementen zurück.
-
-\funcSignature{zipWith :: (a \rightarrow b \rightarrow c) \rightarrow [a] \rightarrow [b] \rightarrow [c] }
-$zipWith\; op\; xs\; ys$ verknüpft die i-ten Elemente von xs und ys mit der Operation op und gibt das Ergebnis an der i-ten Stelle in der Ausgabeliste zurück. Unterscheiden sich die Längen der Eingabelisten, entspricht die Länge der Ausgabeliste der kürzeren Eingabeliste. Die überschüssigen Elemente der längeren Elemente werden nicht verwendet.
-\example
-$$zipWith\; (+)\; [1,2,3]\; [4,5,6] == [5,7,9]$$
-$$zipWith\; (+)\; [1,2,3]\; [4,5,6,7,8] == [5,7,9]\qquad \textit{//Ausgabeliste gleich lang wie kürzere Eingabeliste}$$
-$$zipWith\; (+)\; []\; [4,5,6] == []$$
-\analog{zipWith3, zipWith4, zipWith5, zipWith6, zipWith7}
-Verarbeiten 3,4,5,6,7 Eingabelisten und geben eine Liste von Tupeln mit 3,4,5,6,7 Elementen zurück. Die Operation muss die entsprechende Anzahl an Parametern verwenden, zipWith3 kann z.B. nicht mit der Funktion $(+)$ verwendet werden, stattdessen muss $(\backslash x\; y\; z \rightarrow x + y + z)$ verwendet werden.
-
-\funcSignature{elem :: Eq a \Rightarrow a \rightarrow [a] \rightarrow Bool}
-$elem a xs$ gibt \enquote{True} zurück, wenn a in der Liste xs enthalten ist.
-\example
-$$elem\; 1 [1,2,3,4] == True$$
-$$elem\; 1 [2,3,4] == False$$
-
-\funcSignature{sort :: Ord\; a \Rightarrow [a] \rightarrow [a] }
-Sortiert Elemente vom kleinsten zum größten Element, Duplikate werden beibehalten in der Reihenfolge aus der Eingabe. 
-\example
-$$sort [2,3,4,1] == [1,2,3,4] $$
-
-\funcSignature{sortBy :: (a \rightarrow a \rightarrow Ordering) \rightarrow [a] \rightarrow [a]}
-Sortiert Elemente vom kleinsten zum größten Element, unter Verwendung einer indivduellen Vergleichsfunktion. Duplikate werden beibehalten in der Reihenfolge aus der Eingabe.
-
-\funcSignature{subsequences :: [a] \rightarrow [[a]] }
-Gibt eine Liste mit allen Subsequenzen zurück.
-\example
-$$subsequences\; \text{\engquote{abc}} == [ \text{\engquote{}, \engquote{a}, \engquote{b}, \engquote{ab}, \engquote{c}, \engquote{ac}, \engquote{bc}, \engquote{abcb} } ]$$
-
-\funcSignature{permutations :: [a] \rightarrow [[a]] }
-Gibt eine Liste mit allen Permutationen zurück.
-$$permutations \text{ \engquote{abc} } == [ \text{ \engquote{abc},\engquote{bac}, \engquote{cba}, \engquote{bca}, \engquote{cab}, \engquote{acb} } ]$$
-
-\funcSignature{inits :: [a] \rightarrow [[a]] }
-Gibt eine Liste aller Segmente der Eingabeliste zurück, das kürzeste Segment ist das erste Element der Ausgabeliste.
-\example
-$$inits\; [1,3,5] == [[], [1], [1,3], [1,3,5] ]$$
-$$inits\; [1,2,3,4,5] == [[],[1], [1,2], [1,2,3], [1,2,3,4], [1,2,3,4,5] ]$$
+\funcSignature{rotate::[a] -> Int -> [a]}
+\texttt{rotate list n} verschiebe die Elemente der Liste um n Stellen nach links
+$$\text{rotate \enquote{abcdefgh} 3 == \enquote{defghabc}}$$
+$$\text{rotate \enquote{abcdefgh} (-2) == \enquote{ghabcdef}}$$
+\begin{lstlisting}
+rotate xs n = drop nn xs ++ take nn xs
+  where nn = n `mod` length xs
+\end{lstlisting}
