@@ -12,10 +12,10 @@
 \usepackage[ngerman]{babel}
 \usepackage{geometry}
 \geometry{
-	left = 1cm,
-	right = 1cm,
-	top = 2cm,
-	bottom = 2cm
+	left = 0.5cm,
+	right = 0.5cm,
+	top = 0.5cm,
+	bottom = 0.5cm
 }
 
 %\usepackage{showframe}% http://ctan.org/pkg/showframe
@@ -32,6 +32,7 @@
 % this alters "before" spacing (the second length argument) to 0
 \titlespacing*{\chapter}{0pt}{0pt}{10pt}
 \titlespacing*{\section}{5pt}{0pt}{5pt}
+\titlespacing*{\subsection}{5pt}{0pt}{5pt}
 
 \usepackage{amssymb} 
 \usepackage{amsmath}
@@ -42,7 +43,8 @@
 
 \usepackage[colorlinks]{hyperref}
 \hypersetup{
-	colorlinks = false
+	colorlinks = false,
+	linkbordercolor= red
 }
 
 \usepackage{algorithm}
@@ -94,7 +96,7 @@
 \newcommand{\analog}[1]{\newline \underline{Analog:} $#1$ \newline}
 \newcommand{\slide}[2]{(Folie: $#1\_\text{(#2)}$)}
 \newcommand{\engquote}[1]{\foreignblockquote{english}{#1}}
-\newcommand{\multlineTable}[1]{\begin{tabular}[c]{@{}l@{}}\\#1\\ \end{tabular}}
+\newcommand{\multlineTable}[1]{\begin{tabular}[c]{@{}l@{}}#1\\ \end{tabular}}
 \definecolor{light-gray}{gray}{0.9}
 \newcommand{\exRef}[1]{ \colorbox{light-gray}{(Ref.: #1)}}
 
@@ -117,24 +119,11 @@
 	 Pro-to-koll-in-stan-zen
 }
 
-%\listoftodos
-\tableofcontents
-
 
 %\begin{sidewaysfigure}
 %\noindent\makebox[\textwidth]{\includegraphics{imgs/TaskOverview.png}}
 %\end{sidewaysfigure}
 
-%\include{sections/000_Questions}
-
-\include{sections/001_Haskell}
-\include{sections/002_theoBasics}
-
-\lstset{language=Prolog} 
-\include{sections/003_Prolog}
-
-\include{sections/004_parallelProgramming}
-\include{sections/005_DesignByContract}
-\include{sections/006_Compiler}
+\include{sections/000_Topics}
 
 \end{document}
