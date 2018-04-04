@@ -7,6 +7,7 @@
 	\item kleiner-gleich : \enquote{$=<$}
 	\item größer: \enquote{$>$}
 	\item größer-gleich: \enquote{$>=$}
+	\item logisches-nicht: \enquote{\textbackslash +}
 \end{compactitem}
 
 \section{Funktionen für Listen}
@@ -58,17 +59,9 @@
 	\item Listenlänge \exRef{WS 12/13, Nr. 3a}
 		\begin{lstlisting}
 		length([],0).
-<<<<<<< HEAD
 		length([_|R], NewLength):- length(R,Length), NewLength is Length +1.
 		\end{lstlisting}	
-	\item Alle möglichen Teillisten einer Liste \exRef{Z-Üb 7, Nr.1.2}
-		\begin{lstlisting}
-		splits(L, ([], L)).
-		splits([X|L], ([X|S], E)):-splits(L,(S,E)).
-=======
-		length([_|R],NewLength):- length(R,Length), NewLength is Length +1.
-		\end{lstlisting}	
-	\item alle möglichen Zerlegungen (Anfang- und Endteil) einer Liste \exRef{SS 13, Nr. 4b}
+	\item alle möglichen Zerlegungen (Anfang- und Endteil) einer Liste \exRef{SS 13, Nr. 4b; Z-Üb 7, Nr.1.2}
 		\begin{lstlisting}
 		splits(L,([],L)).
 		splits([X|L],([X|S], E)):- splits(L,(S,E)).
@@ -78,7 +71,6 @@
 		sublists([],[]).
 		sublists([X|L],[X|L2]):-sublists(L,L2).
 		sublists([_|L],L2):-sublists(L,L2).
->>>>>>> c54c54954143bcf252fd91a88d2b9c0b3874f131
 		\end{lstlisting}
 	\item Test auf Duplikate:
 		\begin{lstlisting}
@@ -87,9 +79,10 @@
 		\end{lstlisting}
 	\item Entferne aufeinanderfolgende Duplikate:
 		\begin{lstlisting}
-		removeDuplicates([],[]).
-		removeDuplicates([H|[H|T]],L):- removeDuplicates([H|T],L).
-		removeDuplicates([H|T],[H|L]):- removeDuplicates(T,L).
+		compress([],[]).
+		compress([X],[X]).
+		compress([X,X|Xs],Zs) :- compress([X|Xs],Zs).
+		compress([X,Y|Ys],[X|Zs]) :- X \= Y, compress([Y|Ys],Zs).
 		\end{lstlisting}
 	\item Entferne alle Duplikate (auch wenn doppelte Elemente nicht direkt hintereinander sind):
 		\begin{lstlisting}
@@ -101,6 +94,59 @@
 		lastElem([X],X).
 		lastElem([H|T], R):-lastElem(T,R).
 		\end{lstlisting}
+	\item isPalindrom:
+		\begin{lstlisting}
+		isPalindrom(L):-reverse(L,L).
+		\end{lstlisting}
+	\item Transform a list, possibly holding lists as elements into a `flat' list by replacing each list with its elements (recursively):
+		\begin{lstlisting}
+		my_flatten(X,[X]) :- \+ is_list(X).
+		my_flatten([],[]).
+		my_flatten([X|Xs],Zs) :- my_flatten(X,Y), my_flatten(Xs,Ys), append(Y,Ys,Zs).
+		\end{lstlisting}	
+	\item Speichere aufeinanderfolgende Duplikate aus der Eingabeliste in Unterlisten. Falls sich Elemente aus der Eingabeliste wiederholen und nicht direkt aufeinanderfolgen, werden diese in separate Unterlisten gespeichert:
+		\begin{lstlisting}
+		pack([],[]).
+		pack([X|Xs],[Z|Zs]) :- transfer(X,Xs,Ys,Z), pack(Ys,Zs).
+		
+		transfer(X,[],[],[X]).
+		transfer(X,[Y|Ys],[Y|Ys],[X]) :- X \= Y.
+		transfer(X,[X|Xs],Ys,[X|Zs]) :- transfer(X,Xs,Ys,Zs).
+		\end{lstlisting}		
+	\item run-length encoding:	
+		\begin{lstlisting}
+		encode(L1,L2) :- pack(L1,L), transform(L,L2).
+		
+		transform([],[]).
+		transform([[X|Xs]|Ys],[[N,X]|Zs]) :- length([X|Xs],N), transform(Ys,Zs).
+		\end{lstlisting}	
+	\item run-length decoding:
+		\begin{lstlisting}
+		decode([],[]).
+		decode([X|Ys],[X|Zs]) :- \+ is_list(X), decode(Ys,Zs).
+		decode([[1,X]|Ys],[X|Zs]) :- decode(Ys,Zs).
+		decode([[N,X]|Ys],[X|Zs]) :- N > 1, N1 is N - 1, decode([[N1,X]|Ys],Zs).
+		\end{lstlisting}
+	\item Listen-Elemente duplizieren: 	
+		\begin{lstlisting}
+		dupli([],[]).
+		dupli([X|Xs],[X,X|Ys]) :- dupli(Xs,Ys).
+		\end{lstlisting}
+	\item Slice List: extrahiere Teil-Liste von Index I bis Index K:
+		\begin{lstlisting}
+		slice([X|_],1,1,[X]).
+		slice([X|Xs],1,K,[X|Ys]) :- K > 1, K1 is K - 1, slice(Xs,1,K1,Ys).
+		slice([_|Xs],I,K,Ys) :- I > 1, I1 is I - 1, K1 is K - 1, slice(Xs,I1,K1,Ys).
+		\end{lstlisting}
+	\item rotiere Liste um n Stellen nach links:
+		\begin{lstlisting}
+		rotate([],_,[]) :- !.
+		rotate(L1,N,L2) :-
+		length(L1,NL1), N1 is N mod NL1, split(L1,N1,S1,S2), append(S2,S1,L2).
+		
+		split(L,0,[],L).
+		split([X|Xs],N,[X|Ys],Zs) :- N > 0, N1 is N - 1, split(Xs,N1,Ys,Zs).
+		\end{lstlisting}	
 \end{compactitem}
 
 \section{Sonstige}

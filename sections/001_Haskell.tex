@@ -78,3 +78,17 @@ $$\text{rotate \enquote{abcdefgh} (-2) == \enquote{ghabcdef}}$$
 rotate xs n = drop nn xs ++ take nn xs
   where nn = n `mod` length xs
 \end{lstlisting}
+
+\funcSignature{removeAt::Int -> [a] -> [a]}
+\texttt{removeAt i list} entfernt das i-te Element (erstes Element hat Index 0) aus der Liste \enquote{list} 
+\begin{lstlisting}
+removeAt i ys = a ++ (tail b)
+  where (a,b) = (take i ys, drop i ys)
+\end{lstlisting}
+
+\funcSignature{insertAt::Int -> a -> [a] -> [a]}
+\texttt{insertAt i e list} fügt das Element \enquote{e} in die Liste \enquote{list} an Index \enquote{i} ein (erstes Element hat Index 0)
+\begin{lstlisting}
+insertAt 0 e xs = e:xs
+insertAt i e (x:xs) = x:(insertAt (i-1) e xs)
+\end{lstlisting}
