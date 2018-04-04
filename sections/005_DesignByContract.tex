@@ -17,3 +17,16 @@
 		& \multlineTable{(\textbackslash exists int i; 0 \textless = i \&\& i \textless size; \textbackslash old(elements[i])==elements[i])\\ es gibt ein i zwischen 0 und \enquote{size}, für das gilt:\\ \textbackslash old(elements[i])==elements[i])}\\ \hline
 	\end{tabular}
 \end{table}
+
+\lstset{language=Java}
+
+\begin{lstlisting}
+/*@ requires size > 0;
+@ ensures size == \old(size) - 1
+@ ensures \result == \old(top())
+@ ensures (\forall int i; 0 <= i && i < size;
+\old(elements[i]) == elements[i]);
+@*/
+Object pop() { pop logic }
+
+\end{lstlisting}
